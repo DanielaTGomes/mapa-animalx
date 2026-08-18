@@ -121,6 +121,76 @@
                 overflow: visible !important; /* A própria página faz scroll, a lista já não precisa de ter barra lateral interna */
                 padding: 10px 15px 30px 15px !important;
             }
+            /* --- CORREÇÃO DEFINITIVA DO POPUP MOBILE --- */
+            
+            /* 1. Controlar os contentores nativos do Leaflet */
+            .leaflet-popup {
+                width: 85vw !important; /* Nunca ultrapassa 85% do ecrã */
+                max-width: 320px !important;
+            }
+            .leaflet-popup-content-wrapper {
+                width: 100% !important;
+                padding: 0 !important; /* Tira bordas invisíveis */
+                overflow: hidden !important; /* Corta tudo o que tentar sair */
+            }
+            .leaflet-popup-content {
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            /* 2. Controlar o teu design (O Cartão) */
+            .cartao-popup {
+                display: flex !important;
+                flex-direction: column !important; /* Imagem em cima, texto em baixo */
+                width: 100% !important;
+            }
+
+            /* 3. Prender a Imagem na Metade Superior */
+            .cartao-esquerda {
+                width: 100% !important;
+                height: 140px !important; /* Altura fixa e baixinha para não ocupar o ecrã todo */
+                display: flex !important;
+                justify-content: center !important;
+                align-items: center !important;
+                background-color: #f9f9f9 !important; /* Fundo clarinho */
+                border-bottom: 1px solid #ddd !important;
+                border-right: none !important;
+            }
+            
+            /* A regra de ouro que impede a imagem de explodir: */
+            .cartao-esquerda img, .cartao-img, .cartao-img-logo {
+                width: 100% !important;
+                height: 100% !important;
+                object-fit: contain !important; /* Mantém as proporções sem cortar nem esticar */
+                max-height: 130px !important;
+                padding: 10px !important;
+                box-sizing: border-box !important;
+            }
+
+            /* 4. Arrumar o Texto na Metade Inferior */
+            .cartao-direita {
+                width: 100% !important;
+                padding: 15px !important;
+                box-sizing: border-box !important;
+            }
+            .cartao-direita h2 {
+                font-size: 1.1rem !important;
+                margin-top: 0 !important;
+            }
+            .cartao-direita ul {
+                padding-left: 15px !important;
+                font-size: 0.85rem !important;
+            }
+            .btn-ver-mais {
+                display: block !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+                text-align: center !important;
+                padding: 10px !important;
+                margin-top: 10px !important;
+            }
         }
         </style>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
