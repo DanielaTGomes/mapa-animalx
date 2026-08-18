@@ -23,6 +23,8 @@
             margin: 0;
         }
 
+
+
         /* --- LAYOUT MOBILE  --- */
         @media (max-width: 768px) {
           
@@ -231,6 +233,78 @@
                 border: 2px solid white !important; 
             }
         }
+
+        /* --- CORREÇÃO DO POPUP DESKTOP (TEXTOS LONGOS) --- */
+
+        @media (min-width: 769px) {
+            
+            /* 1. Dar uma largura panorâmica ao balão para caber tudo bem */
+            .leaflet-popup {
+                width: 500px !important; /* Balão bem mais largo */
+            }
+            .leaflet-popup-content {
+                width: 500px !important;
+                max-height: 380px !important;
+                overflow: hidden !important; 
+                margin: 0 !important;
+            }
+            
+            /* 2. O cartão ganha dimensões fixas */
+            .cartao-popup {
+                display: flex !important;
+                height: 320px !important; 
+                width: 100% !important;
+            }
+
+            /* 3. Lado da Imagem: Controlado e sem cortes */
+            .cartao-esquerda {
+                width: 45% !important; /* Dá quase metade do balão à imagem */
+                height: 100% !important;
+                background-color: #f8f8f8 !important; /* Um fundo cinza super claro para as fotos encaixarem bem */
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+            }
+
+            .cartao-esquerda img, .cartao-img, .cartao-img-logo {
+                width: 100% !important;
+                height: 100% !important;
+                object-fit: contain !important; /* A MAGIA: Garante que a imagem/logo se vê SEMPRE por inteiro */
+                padding: 15px !important; /* Dá um respiro para o ícone não bater nas bordas */
+                box-sizing: border-box !important;
+            }
+
+            /* 4. Lado do Texto: Com scroll alinhado */
+            .cartao-direita {
+                width: 55% !important; /* O texto fica com o resto do espaço */
+                height: 100% !important;
+                overflow-y: auto !important; 
+                padding: 15px 20px 25px 15px !important; /* Topo, Direita, Fundo, Esquerda */
+                box-sizing: border-box !important;
+                display: flex !important;
+                flex-direction: column !important;
+            }
+            
+            /* Botão sempre no fundo */
+            .btn-ver-mais {
+                margin-top: auto !important; 
+                margin-bottom: 5px !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+            
+            /* Scrollbar elegante */
+            .cartao-direita::-webkit-scrollbar {
+                width: 6px;
+            }
+            .cartao-direita::-webkit-scrollbar-thumb {
+                background: #6D4C8D; 
+                border-radius: 4px;
+            }
+            .cartao-direita::-webkit-scrollbar-track {
+                background: #f1f1f1; 
+            }
+        }
         </style>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <title>Mapa ANIMALx</title>
@@ -363,7 +437,7 @@
         }
         var map = L.map('map', {
             zoomControl:false, maxZoom:27, minZoom:1
-        }).fitBounds([[38.72970186448931,-9.127264853398252],[38.74412336605413,-9.087739856356526]]);
+        }).setView([38.7500, -9.2300], 11);
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/qgis2web/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
