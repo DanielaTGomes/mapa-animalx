@@ -23,116 +23,104 @@
             margin: 0;
         }
 
-            /* --- LAYOUT MOBILE OTIMIZADO --- */
-            @media (max-width: 768px) {
-            /* 1. LIBERTAR O SCROLL DA PÁGINA */
+/* --- LAYOUT MOBILE DE FORÇA BRUTA --- */
+        @media (max-width: 768px) {
+            /* 1. DESTRUIR O BLOQUEIO DE SCROLL DO QGIS2WEB */
             html, body {
-                height: auto !important; /* Remove a limitação de 100% de altura */
-                min-height: 100vh;
-                overflow-y: auto !important; /* Devolve o scroll natural ao telemóvel */
+                height: auto !important; 
+                min-height: 100vh !important;
+                overflow-y: auto !important; 
+                overflow-x: hidden !important;
+                display: block !important;
+            }
+
+            /* 2. FORÇAR A ESTRUTURA A DESCER EM COLUNA */
+            .dashboard-animalx {
                 display: flex !important;
                 flex-direction: column !important;
+                height: auto !important;
+                overflow: visible !important;
             }
 
-            .dashboard-animalx, .toolbar-animalx, .main-animalx, .sidebar-animalx {
-                display: contents !important; 
-            }
-
-            /* 2. AFASTAR OS MENUS E ARRUMAR ESPAÇAMENTOS */
-            .header-animalx { 
-                order: 1; 
-                padding: 10px 15px;
-                margin-bottom: 5px;
-            }
-
-            .toolbar-esq { 
-                order: 2; 
-                display: flex;
-                overflow-x: auto;
-                white-space: nowrap;
-                padding: 5px 15px 15px 15px !important; /* Espaço inferior para não bater na pesquisa */
-                gap: 10px;
-            }
-
-            .toolbar-centro { 
-                order: 3; 
-                padding: 5px 15px 15px 15px !important;
-            }
-
-            .toolbar-dir { 
-                order: 4; 
-                padding: 5px 15px 15px 15px;
-                display: flex;
-                flex-direction: column; /* Coloca os filtros em coluna no telemóvel para não cortarem */
-                gap: 10px;
-            }
-
-            /* 3. O MAPA */
-            #mapa-container {
-                order: 5;
-                width: 100% !important;
-                height: 50vh !important; /* Ocupa 50% do ecrã visível */
-                min-height: 380px; /* Mas nunca menos que 380px para não esmagar a interface */
-                position: relative !important;
-                margin-top: 5px;
-                z-index: 1; 
-            }
-            #map { height: 100% !important; }
-
-            /* 4. LINHA TEMPORAL E RESULTADOS */
-            .timeline-container { 
-                order: 6; 
-                padding: 15px 15px;
-                background-color: white; 
-                border-bottom: 1px solid #eee;
-            }
-            .titulo-sidebar {
-                order: 7;
-                padding: 15px 15px 5px 15px;
-            }
-            #lista-preview { 
-                order: 8; 
-                width: 100%;
-                padding: 10px 15px;
-                overflow: visible !important; /* Como a página já faz scroll, a lista também faz */
-            }
-
-            /* --- 5. CORRIGIR O POPUP GIGANTE --- */
-            /* Controlar a "caixa" do Leaflet */
-            .leaflet-popup {
-                width: 85vw !important; /* Limita a largura a 85% do ecrã do telemóvel */
-            }
-            .leaflet-popup-content {
-                width: 100% !important;
-                max-width: 100% !important; /* Força a anular o minWidth: 620 do JavaScript */
-                margin: 0 !important;
-            }
-            /* Controlar o teu design dentro do Popup */
-            .cartao-popup {
-                display: flex !important;
-                flex-direction: column !important; /* Põe a imagem em cima e o texto em baixo */
-                width: 100% !important;
-                min-width: 0 !important; /* Remove o bloqueio de largura */
-            }
-            .cartao-esquerda {
-                width: 100% !important;
-                height: 180px !important; /* Altura fixa para não ocupar o ecrã todo */
-                border-right: none !important;
-                border-bottom: 1px solid #ccc;
-            }
-            .cartao-esquerda img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                border-radius: 12px 12px 0 0 !important;
-            }
-            .cartao-direita {
-                width: 100% !important;
+            /* 3. ARRUMAR O CABEÇALHO E FERRAMENTAS */
+            .header-animalx {
                 padding: 15px !important;
-                box-sizing: border-box;
             }
-            .cartao-direita h2 { font-size: 1.2rem !important; margin-top: 0; }
-            .cartao-direita ul { padding-left: 15px !important; font-size: 0.9rem; }
+
+            .toolbar-animalx {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 15px !important;
+                padding: 10px 15px !important;
+                height: auto !important;
+            }
+
+            /* 4. CORRIGIR OS BOTÕES (TEXTO A SAIR) */
+            .toolbar-esq {
+                display: flex !important;
+                flex-wrap: wrap !important; /* Em vez de scroll horizontal, os botões descem de linha se não couberem */
+                gap: 8px !important;
+                justify-content: center !important;
+            }
+
+            .btn-filtro {
+                flex: 1 1 auto !important; /* Deixa o botão crescer ou encolher */
+                white-space: normal !important; /* Permite que o texto se divida em 2 linhas */
+                text-align: center !important;
+                padding: 8px 12px !important;
+                height: auto !important;
+                font-size: 0.9rem !important;
+            }
+
+            /* 5. MENUS DROPDOWN E PESQUISA SOBREPOSTOS */
+            .toolbar-centro, .toolbar-dir {
+                display: flex !important;
+                flex-direction: column !important;
+                width: 100% !important;
+                gap: 10px !important;
+            }
+
+            .toolbar-dir .dropdown-multi, .toolbar-dir .btn-dropdown {
+                width: 100% !important;
+                height: auto !important;
+                white-space: normal !important;
+            }
+
+            /* 6. GARANTIR QUE O MAPA FICA NO MEIO E NÃO BLOQUEIA O RESTO */
+            .main-animalx {
+                display: flex !important;
+                flex-direction: column !important;
+                height: auto !important;
+            }
+
+            #mapa-container {
+                width: 100% !important;
+                height: 50vh !important; /* O mapa ocupa metade do ecrã */
+                min-height: 350px !important;
+                position: relative !important;
+                order: 1 !important;
+                z-index: 1 !important;
+            }
+
+            /* 7. LINHA DO TEMPO E RESULTADOS CÁ PARA BAIXO */
+            .sidebar-animalx {
+                display: flex !important;
+                flex-direction: column !important;
+                width: 100% !important;
+                height: auto !important;
+                order: 2 !important;
+                overflow: visible !important;
+            }
+
+            .timeline-container {
+                padding: 20px 15px !important;
+            }
+
+            #lista-preview {
+                height: auto !important;
+                overflow: visible !important; /* A própria página faz scroll, a lista já não precisa de ter barra lateral interna */
+                padding: 10px 15px 30px 15px !important;
+            }
         }
         </style>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
