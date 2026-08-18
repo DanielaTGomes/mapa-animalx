@@ -354,7 +354,7 @@
             var textoPopup = `
                 <div class="cartao-popup">
                     <div class="cartao-esquerda">
-                        <img src="${caminhoFinal}" class="${classeImagem}" alt="Imagem">
+                        <img src="${caminhoFinal}" class="${classeImagem}" loading="lazy" alt="Imagem">
                     </div>
                     <div class="cartao-direita">
                         <h2>${props.nome_comum || 'Desconhecido'}</h2>
@@ -759,7 +759,7 @@
                     var cartaoHTML = `
                         <div class="card-preview" onclick="focarAbrirPopup(${layerId})">
                             <div class="preview-img-container">
-                                <img src="${caminhoFinal}" class="${classeImagem}" alt="${nomeComum}">
+                                <img src="${caminhoFinal}" class="${classeImagem}" loading="lazy" alt="${nomeComum}">
                             </div>
                             <div class="preview-content">
                                 <h4>${nomeComum}</h4>
