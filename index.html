@@ -122,66 +122,78 @@
             }
            /* --- CORREÇÃO DOS POPUPS --- */
             
+            
             .leaflet-popup {
-                width: 82vw !important; /* Usa grande parte da largura do ecrã */
+                width: 82vw !important; 
             }
             .leaflet-popup-content-wrapper {
                 padding: 0 !important;
                 border-radius: 12px !important;
-                overflow: hidden !important; /* Corta tudo o que sair das margens */
+                overflow: hidden !important; 
             }
+            
+          
             .leaflet-popup-content {
                 margin: 0 !important;
                 width: 100% !important;
+                max-height: 40vh !important; 
+                overflow-y: auto !important; 
             }
             
-            /* A Caixa Principal */
             .cartao-popup {
                 display: block !important; 
                 width: 100% !important;
             }
             
-            /* A Caixa da Imagem (Em cima) */
+            /* A Caixa da Imagem mais pequenina */
             .cartao-esquerda {
                 width: 100% !important;
-                height: 160px !important; /* Altura perfeita para ver a foto sem ocupar o ecrã todo */
+                height: 110px !important; /* Reduzimos de 160px para 110px para poupar espaço */
                 border-right: none !important;
-                border-bottom: 3px solid #6D4C8D !important; /* Linha roxa a separar a foto do texto */
+                border-bottom: 2px solid #6D4C8D !important; 
                 display: block !important;
+                background-color: #f9f9f9 !important;
             }
             
-            /* A Imagem em si */
+            /* A Imagem / Logótipo */
             .cartao-esquerda img, .cartao-img, .cartao-img-logo {
                 width: 100% !important;
                 height: 100% !important;
-                object-fit: cover !important; /* Preenche a caixa lindamente sem amassar a imagem */
-                padding: 0 !important;
-                border-radius: 12px 12px 0 0 !important;
+                object-fit: contain !important; /* "Contain" garante que o logo não é cortado */
+                padding: 10px !important;
+                box-sizing: border-box !important;
             }
             
-            /* A Caixa do Texto (Em baixo) */
+
             .cartao-direita {
                 width: 100% !important;
-                padding: 15px !important;
+                padding: 12px !important;
                 box-sizing: border-box !important;
                 display: block !important;
             }
             
             .cartao-direita h2 {
-                font-size: 1.2rem !important;
+                font-size: 1.1rem !important;
                 margin-top: 0 !important;
-                margin-bottom: 5px !important;
+                margin-bottom: 2px !important;
+            }
+            
+            .cartao-direita h4.cientifico {
+                font-size: 0.9rem !important;
+                margin-top: 0 !important;
+                margin-bottom: 8px !important;
             }
             
             .cartao-direita ul {
                 padding-left: 0 !important;
-                list-style: none !important; /* Tira as bolinhas para poupar espaço no ecrã */
-                margin-top: 10px !important;
+                list-style: none !important; 
+                margin-top: 5px !important;
+                margin-bottom: 10px !important;
             }
             
             .cartao-direita ul li {
-                font-size: 0.9rem !important;
-                margin-bottom: 6px !important;
+                font-size: 0.85rem !important;
+                margin-bottom: 4px !important;
             }
             
             .btn-ver-mais {
@@ -189,22 +201,24 @@
                 width: 100% !important;
                 text-align: center !important;
                 box-sizing: border-box !important;
-                margin-top: 15px !important;
-                padding: 12px !important;
+                margin-top: 5px !important;
+                padding: 10px !important;
+                font-size: 0.9rem !important;
             }
             
-            /* Fazer o "X" de fechar destacar-se por cima da fotografia */
+            /* O "X" de fechar com sombra para se ver bem */
             .leaflet-popup-close-button {
-                background-color: rgba(255, 255, 255, 0.85) !important;
+                background-color: rgba(255, 255, 255, 0.9) !important;
                 border-radius: 50% !important;
                 width: 26px !important;
                 height: 26px !important;
                 text-align: center !important;
                 line-height: 26px !important;
                 color: #333 !important;
-                top: 10px !important;
-                right: 10px !important;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+                top: 8px !important;
+                right: 8px !important;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;
+                z-index: 999 !important;
             }
         }
         </style>
