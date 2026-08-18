@@ -124,20 +124,27 @@
             
             
             .leaflet-popup {
-                width: 82vw !important; 
+                width: 280px !important; 
+                margin-bottom: 15px !important;
             }
             .leaflet-popup-content-wrapper {
                 padding: 0 !important;
                 border-radius: 12px !important;
-                overflow: hidden !important; 
+                background: transparent !important; 
+                box-shadow: none !important;
+                overflow: visible !important;
             }
             
           
             .leaflet-popup-content {
                 margin: 0 !important;
-                width: 100% !important;
-                max-height: 40vh !important; 
+                width: 280px !important;
+                max-height: 260px !important; 
                 overflow-y: auto !important; 
+                overflow-x: hidden !important;
+                background: white !important;
+                border-radius: 8px !important;
+                box-shadow: 0 3px 14px rgba(0,0,0,0.4) !important;
             }
             
             .cartao-popup {
@@ -148,7 +155,7 @@
             /* A Caixa da Imagem mais pequenina */
             .cartao-esquerda {
                 width: 100% !important;
-                height: 110px !important; /* Reduzimos de 160px para 110px para poupar espaço */
+                height: 90px !important; /* Reduzimos de 160px para 110px para poupar espaço */
                 border-right: none !important;
                 border-bottom: 2px solid #6D4C8D !important; 
                 display: block !important;
@@ -167,58 +174,58 @@
 
             .cartao-direita {
                 width: 100% !important;
-                padding: 12px !important;
+                padding: 10px !important;
                 box-sizing: border-box !important;
                 display: block !important;
             }
             
             .cartao-direita h2 {
-                font-size: 1.1rem !important;
-                margin-top: 0 !important;
-                margin-bottom: 2px !important;
+                font-size: 1rem !important;
+                margin: 0 0 2px 0 !important;
             }
             
             .cartao-direita h4.cientifico {
-                font-size: 0.9rem !important;
-                margin-top: 0 !important;
-                margin-bottom: 8px !important;
+                font-size: 0.85rem !important;
+                margin: 0 0 6px 0 !important;
+                color: #555 !important;
             }
             
             .cartao-direita ul {
                 padding-left: 0 !important;
                 list-style: none !important; 
-                margin-top: 5px !important;
-                margin-bottom: 10px !important;
+                margin: 0 0 10px 0 !important;
             }
             
             .cartao-direita ul li {
-                font-size: 0.85rem !important;
-                margin-bottom: 4px !important;
+                font-size: 0.8rem !important; /* Texto mais compacto */
+                margin-bottom: 3px !important;
+                line-height: 1.2 !important;
             }
             
             .btn-ver-mais {
                 display: block !important;
                 width: 100% !important;
                 text-align: center !important;
-                box-sizing: border-box !important;
+                padding: 8px !important;
+                font-size: 0.85rem !important;
                 margin-top: 5px !important;
-                padding: 10px !important;
-                font-size: 0.9rem !important;
             }
             
-            /* O "X" de fechar com sombra para se ver bem */
+            /* Botão de fechar */
             .leaflet-popup-close-button {
-                background-color: rgba(255, 255, 255, 0.9) !important;
+                background-color: #333 !important; 
+                color: white !important; 
                 border-radius: 50% !important;
                 width: 26px !important;
                 height: 26px !important;
-                text-align: center !important;
                 line-height: 26px !important;
-                color: #333 !important;
-                top: 8px !important;
-                right: 8px !important;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;
-                z-index: 999 !important;
+                text-align: center !important;
+                top: -12px !important; 
+                right: -12px !important; 
+                box-shadow: 0 2px 5px rgba(0,0,0,0.5) !important;
+                z-index: 9999 !important;
+                font-size: 16px !important;
+                border: 2px solid white !important; 
             }
         }
         </style>
