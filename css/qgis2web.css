@@ -1015,3 +1015,44 @@ body, html {
                 overflow-y: auto;
             }
         }
+
+/* --- ESTILOS DO ECRÃ DE CARREGAMENTO --- */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #ffffff; /* Fundo branco limpo */
+            z-index: 99999; /* Garante que fica por cima do mapa e da barra lateral */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease; /* Efeito suave ao desaparecer */
+        }
+
+        /* O círculo a rodar */
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3; /* Cinzento muito claro */
+            border-top: 5px solid #6D4C8D; /* O teu roxo */
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        /* O texto de carregamento */
+        .loading-text {
+            font-family: Arial, sans-serif;
+            color: #6D4C8D;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        /* A animação de rotação */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
