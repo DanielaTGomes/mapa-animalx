@@ -23,9 +23,9 @@
             margin: 0;
         }
 
-/* --- LAYOUT MOBILE DE FORÇA BRUTA --- */
+        /* --- LAYOUT MOBILE  --- */
         @media (max-width: 768px) {
-            /* 1. DESTRUIR O BLOQUEIO DE SCROLL DO QGIS2WEB */
+          
             html, body {
                 height: auto !important; 
                 min-height: 100vh !important;
@@ -34,7 +34,6 @@
                 display: block !important;
             }
 
-            /* 2. FORÇAR A ESTRUTURA A DESCER EM COLUNA */
             .dashboard-animalx {
                 display: flex !important;
                 flex-direction: column !important;
@@ -42,7 +41,7 @@
                 overflow: visible !important;
             }
 
-            /* 3. ARRUMAR O CABEÇALHO E FERRAMENTAS */
+            /*  CABEÇALHO E FERRAMENTAS */
             .header-animalx {
                 padding: 15px !important;
             }
@@ -55,7 +54,7 @@
                 height: auto !important;
             }
 
-            /* 4. CORRIGIR OS BOTÕES (TEXTO A SAIR) */
+            /* CORRIGIR OS BOTÕES  */
             .toolbar-esq {
                 display: flex !important;
                 flex-wrap: wrap !important; /* Em vez de scroll horizontal, os botões descem de linha se não couberem */
@@ -72,7 +71,7 @@
                 font-size: 0.9rem !important;
             }
 
-            /* 5. MENUS DROPDOWN E PESQUISA SOBREPOSTOS */
+            /* 5. MENUS DROPDOWN E PESQUISA */
             .toolbar-centro, .toolbar-dir {
                 display: flex !important;
                 flex-direction: column !important;
@@ -86,7 +85,7 @@
                 white-space: normal !important;
             }
 
-            /* 6. GARANTIR QUE O MAPA FICA NO MEIO E NÃO BLOQUEIA O RESTO */
+            /* MAPA */
             .main-animalx {
                 display: flex !important;
                 flex-direction: column !important;
@@ -102,7 +101,7 @@
                 z-index: 1 !important;
             }
 
-            /* 7. LINHA DO TEMPO E RESULTADOS CÁ PARA BAIXO */
+            /* 7. LINHA DO TEMPO E RESULTADOS  */
             .sidebar-animalx {
                 display: flex !important;
                 flex-direction: column !important;
@@ -121,75 +120,91 @@
                 overflow: visible !important; /* A própria página faz scroll, a lista já não precisa de ter barra lateral interna */
                 padding: 10px 15px 30px 15px !important;
             }
-            /* --- CORREÇÃO DEFINITIVA DO POPUP MOBILE --- */
+           /* --- CORREÇÃO DOS POPUPS --- */
             
-            /* 1. Controlar os contentores nativos do Leaflet */
             .leaflet-popup {
-                width: 85vw !important; /* Nunca ultrapassa 85% do ecrã */
-                max-width: 320px !important;
+                width: 82vw !important; /* Usa grande parte da largura do ecrã */
             }
             .leaflet-popup-content-wrapper {
-                width: 100% !important;
-                padding: 0 !important; /* Tira bordas invisíveis */
-                overflow: hidden !important; /* Corta tudo o que tentar sair */
+                padding: 0 !important;
+                border-radius: 12px !important;
+                overflow: hidden !important; /* Corta tudo o que sair das margens */
             }
             .leaflet-popup-content {
-                width: 100% !important;
-                max-width: 100% !important;
                 margin: 0 !important;
-                padding: 0 !important;
-            }
-
-            /* 2. Controlar o teu design (O Cartão) */
-            .cartao-popup {
-                display: flex !important;
-                flex-direction: column !important; /* Imagem em cima, texto em baixo */
                 width: 100% !important;
-            }
-
-            /* 3. Prender a Imagem na Metade Superior */
-            .cartao-esquerda {
-                width: 100% !important;
-                height: 140px !important; /* Altura fixa e baixinha para não ocupar o ecrã todo */
-                display: flex !important;
-                justify-content: center !important;
-                align-items: center !important;
-                background-color: #f9f9f9 !important; /* Fundo clarinho */
-                border-bottom: 1px solid #ddd !important;
-                border-right: none !important;
             }
             
-            /* A regra de ouro que impede a imagem de explodir: */
+            /* A Caixa Principal */
+            .cartao-popup {
+                display: block !important; 
+                width: 100% !important;
+            }
+            
+            /* A Caixa da Imagem (Em cima) */
+            .cartao-esquerda {
+                width: 100% !important;
+                height: 160px !important; /* Altura perfeita para ver a foto sem ocupar o ecrã todo */
+                border-right: none !important;
+                border-bottom: 3px solid #6D4C8D !important; /* Linha roxa a separar a foto do texto */
+                display: block !important;
+            }
+            
+            /* A Imagem em si */
             .cartao-esquerda img, .cartao-img, .cartao-img-logo {
                 width: 100% !important;
                 height: 100% !important;
-                object-fit: contain !important; /* Mantém as proporções sem cortar nem esticar */
-                max-height: 130px !important;
-                padding: 10px !important;
-                box-sizing: border-box !important;
+                object-fit: cover !important; /* Preenche a caixa lindamente sem amassar a imagem */
+                padding: 0 !important;
+                border-radius: 12px 12px 0 0 !important;
             }
-
-            /* 4. Arrumar o Texto na Metade Inferior */
+            
+            /* A Caixa do Texto (Em baixo) */
             .cartao-direita {
                 width: 100% !important;
                 padding: 15px !important;
                 box-sizing: border-box !important;
+                display: block !important;
             }
+            
             .cartao-direita h2 {
-                font-size: 1.1rem !important;
+                font-size: 1.2rem !important;
                 margin-top: 0 !important;
+                margin-bottom: 5px !important;
             }
+            
             .cartao-direita ul {
-                padding-left: 15px !important;
-                font-size: 0.85rem !important;
+                padding-left: 0 !important;
+                list-style: none !important; /* Tira as bolinhas para poupar espaço no ecrã */
+                margin-top: 10px !important;
             }
+            
+            .cartao-direita ul li {
+                font-size: 0.9rem !important;
+                margin-bottom: 6px !important;
+            }
+            
             .btn-ver-mais {
                 display: block !important;
                 width: 100% !important;
-                box-sizing: border-box !important;
                 text-align: center !important;
-                padding: 10px !important;
-                margin-top: 10px !important;
+                box-sizing: border-box !important;
+                margin-top: 15px !important;
+                padding: 12px !important;
+            }
+            
+            /* Fazer o "X" de fechar destacar-se por cima da fotografia */
+            .leaflet-popup-close-button {
+                background-color: rgba(255, 255, 255, 0.85) !important;
+                border-radius: 50% !important;
+                width: 26px !important;
+                height: 26px !important;
+                text-align: center !important;
+                line-height: 26px !important;
+                color: #333 !important;
+                top: 10px !important;
+                right: 10px !important;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
             }
         }
         </style>
