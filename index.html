@@ -27,6 +27,11 @@
         <title>Mapa ANIMALx</title>
     </head>
     <body>
+        <!-- ECRÃ DE CARREGAMENTO -->
+        <div id="loading-screen">
+            <div class="spinner"></div>
+            <p class="loading-text">A carregar o mapa histórico...</p>
+        </div>
         <div class="dashboard-animalx">
             <!-- 1. Cabeçalho -->
             <header class="header-animalx">
@@ -842,6 +847,18 @@
                 collapsed: true,
                 position: 'topleft'
             }).addTo(map);
+
+            // Esconder o ecrã de carregamento quando a página terminar de carregar
+            window.addEventListener('load', function() {
+                var loadingScreen = document.getElementById('loading-screen');
+                // Reduz a opacidade para criar um efeito de transição suave
+                loadingScreen.style.opacity = '0';
+                
+                // Remove o elemento do HTML após meio segundo (o tempo da transição)
+                setTimeout(function() {
+                    loadingScreen.style.display = 'none';
+                }, 500);
+            });
         </script>        
     </body>
 </html>
