@@ -981,3 +981,37 @@ body, html {
             text-align: left; /* Podes mudar para 'center' se preferires centrado */
             padding-left: 10px;
         }
+/* --- AJUSTES PARA TELEMÓVEIS --- */
+        @media (max-width: 768px) {
+            /* Força o ecrã a dividir-se na vertical */
+            body {
+                display: flex;
+                flex-direction: column;
+                margin: 0;
+                padding: 0;
+            }
+
+            /* O mapa fica na metade de cima do telemóvel */
+            #map {
+                width: 100% !important;
+                height: 50vh !important; /* Ocupa 50% da altura do ecrã */
+                position: relative !important;
+            }
+
+            /* A barra lateral fica na metade de baixo */
+            /* ATENÇÃO: Confirma se o ID da tua barra é mesmo 'sidebar'. Se for uma classe ou outro ID, altera aqui! */
+            #sidebar {
+                width: 100% !important;
+                height: 50vh !important;
+                position: relative !important;
+                overflow-y: auto !important; /* Permite fazer scroll nos animais */
+                padding: 10px !important;
+            }
+
+            /* Ajusta o painel de camadas (o menu do canto superior esquerdo do mapa) para não sair do ecrã */
+            .leaflet-control-layers {
+                max-width: 250px;
+                max-height: 200px;
+                overflow-y: auto;
+            }
+        }
