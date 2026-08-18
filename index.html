@@ -155,20 +155,23 @@
             /* A Caixa da Imagem mais pequenina */
             .cartao-esquerda {
                 width: 100% !important;
-                height: 90px !important; /* Reduzimos de 160px para 110px para poupar espaço */
-                border-right: none !important;
-                border-bottom: 2px solid #6D4C8D !important; 
+                height: 100px !important; 
+                border: none !important;
+                background-color: transparent !important;
                 display: block !important;
-                background-color: #f9f9f9 !important;
+                padding: 0 !important;
+                margin: 0 !important;
             }
             
             /* A Imagem / Logótipo */
             .cartao-esquerda img, .cartao-img, .cartao-img-logo {
                 width: 100% !important;
                 height: 100% !important;
-                object-fit: contain !important; /* "Contain" garante que o logo não é cortado */
-                padding: 10px !important;
-                box-sizing: border-box !important;
+                object-fit: cover !important; 
+                padding: 0 !important;
+                margin: 0 !important;
+                border-radius: 8px 8px 0 0 !important; 
+                display: block !important;
             }
             
 
