@@ -22,9 +22,92 @@
             padding: 0;
             margin: 0;
         }
+
+            /* --- LAYOUT MOBILE OTIMIZADO (FLEXBOX ORDER) --- */
+        @media (max-width: 768px) {
+            /* 1. Transforma a página inteira numa coluna Flexbox */
+            body {
+                display: flex !important;
+                flex-direction: column !important;
+                overflow-x: hidden;
+            }
+
+            /* 2. O Truque: Faz as caixas estruturais "derreterem" para podermos reordenar as peças livremente */
+            .dashboard-animalx,
+            .toolbar-animalx,
+            .main-animalx,
+            .sidebar-animalx {
+                display: contents !important; 
+            }
+
+            /* ORDEM 1: Título e Abstract */
+            .header-animalx { 
+                order: 1; 
+                padding: 10px 15px;
+            }
+
+            /* ORDEM 2: Filtros Rápidos (Botões) */
+            .toolbar-esq { 
+                order: 2; 
+                display: flex;
+                overflow-x: auto; /* Permite fazer scroll horizontal aos botões */
+                white-space: nowrap;
+                padding: 10px;
+                gap: 5px;
+            }
+
+            /* ORDEM 3: Barra de Pesquisa */
+            .toolbar-centro { 
+                order: 3; 
+                padding: 5px 10px;
+            }
+
+            /* ORDEM 4: Menus Dropdown */
+            .toolbar-dir { 
+                order: 4; 
+                padding: 5px 10px;
+                display: flex;
+                gap: 10px;
+            }
+
+            /* ORDEM 5: O Mapa! */
+            #mapa-container {
+                order: 5;
+                width: 100% !important;
+                height: 45vh !important; /* Ocupa 45% da altura do ecrã do telemóvel */
+                position: relative !important;
+                margin-top: 10px;
+            }
+            #map {
+                height: 100% !important;
+            }
+
+            /* ORDEM 6: Slider Temporal (Logo debaixo do mapa) */
+            .timeline-container { 
+                order: 6; 
+                padding: 15px 10px;
+                background-color: white; 
+                border-bottom: 1px solid #eee;
+            }
+
+            /* ORDEM 7: A Lista de Resultados/Cartões */
+            .titulo-sidebar {
+                order: 7;
+                padding: 10px 10px 0 10px;
+                margin-bottom: 5px;
+            }
+            #lista-preview { 
+                order: 8; 
+                width: 100%;
+                flex-grow: 1; /* Ocupa o resto do ecrã disponível */
+                overflow-y: auto; /* Permite fazer scroll pelos animais */
+                padding: 10px;
+            }
+        }
         </style>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <title>Mapa ANIMALx</title>
+        
     </head>
     <body>
         <!-- ECRÃ DE CARREGAMENTO -->
