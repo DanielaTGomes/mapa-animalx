@@ -1,0 +1,846 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
+        <link rel="stylesheet" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet.photon.css">
+        <!-- Início MarkerCluster -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
+        <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
+        <!-- Fim MarkerCluster -->
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title>Mapa ANIMALx</title>
+    </head>
+    <body>
+        <div class="dashboard-animalx">
+            <!-- 1. Cabeçalho -->
+            <header class="header-animalx">
+                <h1>Mapa ANIMALx</h1>
+                <p>Explore a história animal de Lisboa através de registos espaciais, representações artísticas e contributos de ciência cidadã.</p>
+            </header>
+
+            <!-- 2. Barra de Ferramentas Unificada -->
+            <section class="toolbar-animalx">
+                <div class="toolbar-esq">
+                    <button class="btn-filtro ativo" data-filtro="todos">Todos</button>
+                    <button class="btn-filtro" data-filtro="ANIMALx Espaços">Espaços</button>
+                    <button class="btn-filtro" data-filtro="ANIMALx Representações">Representações</button>
+                    <button class="btn-filtro" data-filtro="Registos obtidos através da Ação de Ciência Cidadã">Ciência Cidadã</button>
+                </div>
+                <div class="toolbar-centro">
+                    <input type="text" id="pesquisa-especie" placeholder="Pesquisar espécie (ex: Cão, Cavalo)...">
+                </div>
+                <div class="toolbar-dir">
+                    <!-- Dropdown Multiseleção Tipologia -->
+                    <div class="dropdown-multi" id="dd-tipologia">
+                        <button class="btn-dropdown">Todas as Tipologias</button>
+                        <div class="dropdown-conteudo">
+                            <label class="opcao-master selecionado"><input type="checkbox" value="todos" checked> Todas as Tipologias</label>
+                            <label><input type="checkbox" class="filtro-check" value="Consumo"> Consumo</label>
+                            <label><input type="checkbox" class="filtro-check" value="Selvage"> Selvagem</label>
+                            <label><input type="checkbox" class="filtro-check" value="Companhia"> Companhia</label>
+                            <label><input type="checkbox" class="filtro-check" value="Trabalho"> Trabalho</label>
+                            <label><input type="checkbox" class="filtro-check" value="Exposição"> Exposição e Espetáculo</label>
+                            <label><input type="checkbox" class="filtro-check" value="Conhecimento"> Conhecimento e Saúde</label>
+                            <label><input type="checkbox" class="filtro-check" value="Simbólico"> Simbólico</label>
+                        </div>
+                    </div>
+
+                    <!-- Dropdown Multiseleção Séculos -->
+                    <div class="dropdown-multi" id="dd-seculo">
+                        <button class="btn-dropdown">Todos os Séculos</button>
+                        <div class="dropdown-conteudo">
+                            <label class="opcao-master selecionado"><input type="checkbox" value="todos" checked> Todos os Séculos</label>
+                            <label><input type="checkbox" class="filtro-check" value="12"> Século XII</label>
+                            <label><input type="checkbox" class="filtro-check" value="13"> Século XIII</label>
+                            <label><input type="checkbox" class="filtro-check" value="14"> Século XIV</label>
+                            <label><input type="checkbox" class="filtro-check" value="15"> Século XV</label>
+                            <label><input type="checkbox" class="filtro-check" value="16"> Século XVI</label>
+                            <label><input type="checkbox" class="filtro-check" value="17"> Século XVII</label>
+                            <label><input type="checkbox" class="filtro-check" value="18"> Século XVIII</label>
+                            <label><input type="checkbox" class="filtro-check" value="19"> Século XIX</label>
+                            <label><input type="checkbox" class="filtro-check" value="20"> Século XX</label>
+                            <label><input type="checkbox" class="filtro-check" value="21"> Século XXI</label>
+                            <label><input type="checkbox" class="filtro-check" value="Indeterminada"> Indeterminada</label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. Conteúdo Principal (Mapa + Sidebar) -->
+            <main class="main-animalx">
+                <div id="mapa-container">
+                    <!-- O teu mapa Leaflet entra aqui -->
+                    <div id="map"></div> 
+                </div>
+                
+                <aside class="sidebar-animalx">
+                    <!-- Linha do Tempo integrada na Sidebar -->
+                    <div class="timeline-container">
+                        <h3 class="titulo-timeline">Pesquisa por ano</h3>
+                        <div class="timeline-header">
+                            <button id="btn-play" class="btn-play">▶</button>
+                            <div class="timeline-labels">
+                                <span class="extremo-ano">Sec. XII</span>
+                                <span id="ano-display">Todos os Anos</span>
+                                <span class="extremo-ano">2026</span>
+                            </div>
+                        </div>
+                        <input type="range" id="slider-ano" min="1099" max="2026" value="1099" step="1">
+                    </div>
+
+                    <!-- Lista de Previews -->
+                    <h3 class="titulo-sidebar">Resultados:</h3>
+                    <div id="lista-preview" class="lista-preview">
+                        <!-- Os cartões de preview vão aparecer aqui futuramente -->
+                    </div>
+                </aside>
+            </main>
+        </div>
+        
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+
+        <script src="js/multi-style-layer.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet.photon.js"></script>
+        <script src="data/ANIMALxRegistos_1.js"></script>
+        <script src="https://unpkg.com/esri-leaflet"></script>
+        <!-- Carrega o plugin Esri Leaflet para suportar servidores REST -->
+        
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+
+            if (e.target.feature.geometry.type === 'LineString' || e.target.feature.geometry.type === 'MultiLineString') {
+              highlightLayer.setStyle({
+                color: 'rgba(255, 255, 0, 1.00)',
+              });
+            } else {
+              highlightLayer.setStyle({
+                fillColor: 'rgba(255, 255, 0, 1.00)',
+                fillOpacity: 1
+              });
+            }
+        }
+        var map = L.map('map', {
+            zoomControl:false, maxZoom:27, minZoom:1
+        }).fitBounds([[38.72970186448931,-9.127264853398252],[38.74412336605413,-9.087739856356526]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/qgis2web/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+
+        // --- INÍCIO DA LÓGICA DE SIMBOLOGIA DINÂMICA ---
+        function getTipoRegistoSVG(props) {
+                    // 1. Regra mais específica primeiro (Ciência Cidadã)
+                    if (props.layer === 'Registos obtidos através da Ação de Ciência Cidadã') return 'images/marcadores_svg/pin_ciencia_cidada.svg';
+                    
+                    // 2. Regras gerais a seguir
+                    if (props.conjunto === 'ANIMALx Espaços') return 'images/marcadores_svg/pin_espaços.svg';
+                    if (props.conjunto === 'ANIMALx Representações') return 'images/marcadores_svg/pin_representacoes.svg';
+                    
+                    return ''; 
+                }
+        function getCronologiaSVG(props) {
+            if (props.primeira_d === 'Indeterminada') return 'images/marcadores_svg/indeterminada.svg';
+            const inicio = props.ano_inicio;
+            const fim = props.ano_fim;
+            if (inicio <= 1200 && fim >= 1101) return 'images/marcadores_svg/seculo_12.svg';
+            if (inicio <= 1300 && fim >= 1201) return 'images/marcadores_svg/seculo_13.svg';
+            if (inicio <= 1400 && fim >= 1301) return 'images/marcadores_svg/seculo_14.svg';
+            if (inicio <= 1500 && fim >= 1401) return 'images/marcadores_svg/seculo_15.svg';
+            if (inicio <= 1600 && fim >= 1501) return 'images/marcadores_svg/seculo_16.svg';
+            if (inicio <= 1700 && fim >= 1601) return 'images/marcadores_svg/seculo_17.svg';
+            if (inicio <= 1800 && fim >= 1701) return 'images/marcadores_svg/seculo_18.svg';
+            if (inicio <= 1900 && fim >= 1801) return 'images/marcadores_svg/seculo_19.svg';
+            if (inicio <= 2000 && fim >= 1901) return 'images/marcadores_svg/seculo_20.svg';
+            if (inicio <= 2100 && fim >= 2001) return 'images/marcadores_svg/seculo_21.svg';
+            return '';
+        }
+
+        function getTipologiaSVG(props) {
+            const tipologia = props.tipologia || '';
+            if (tipologia.includes('Consumo')) return 'images/marcadores_svg/icone_consumo.svg';
+            if (tipologia.includes('Selvage')) return 'images/marcadores_svg/icone_selvagem.svg';
+            if (tipologia.includes('Companhia')) return 'images/marcadores_svg/icone_companhia.svg';
+            if (tipologia.includes('Trabalho')) return 'images/marcadores_svg/icone_trabalho.svg';
+            if (tipologia.includes('Exposição')) return 'images/marcadores_svg/icone_exposiçãoeespetaculo.svg';
+            if (tipologia.includes('Conhecimento')) return 'images/marcadores_svg/icone_conhecimentoesaude.svg';
+            if (tipologia.includes('Simbólico')) return 'images/marcadores_svg/icone_simbolico.svg';
+            return '';
+        }
+
+        function criarIconeDinamico(feature) {
+            const props = feature.properties;
+            const svgBase = getTipoRegistoSVG(props);
+            const svgMeio = getCronologiaSVG(props);
+            const svgTopo = getTipologiaSVG(props);
+
+            const htmlMarcador = `
+                <div class="marcador-composto">
+                    ${svgBase ? `<img src="${svgBase}" class="camada-base" />` : ''}
+                    ${svgMeio ? `<img src="${svgMeio}" class="camada-meio" />` : ''}
+                    ${svgTopo ? `<img src="${svgTopo}" class="camada-topo" />` : ''}
+                </div>
+            `;
+
+            return L.divIcon({
+                html: htmlMarcador,
+                className: 'custom-div-icon',
+                iconSize: [41, 41],
+                iconAnchor: [20.5, 41]
+            });
+        }
+        // --- FIM DA LÓGICA DE SIMBOLOGIA DINÂMICA ---
+        // remove popup's row if "visible-with-data"
+        function removeEmptyRowsFromPopupContent(content, feature) {
+         var tempDiv = document.createElement('div');
+         tempDiv.innerHTML = content;
+         var rows = tempDiv.querySelectorAll('tr');
+         for (var i = 0; i < rows.length; i++) {
+             var td = rows[i].querySelector('td.visible-with-data');
+             var key = td ? td.id : '';
+             if (td && td.classList.contains('visible-with-data') && feature.properties[key] == null) {
+                 rows[i].parentNode.removeChild(rows[i]);
+             }
+         }
+         return tempDiv.innerHTML;
+        }
+        // modify popup if contains media
+        function addClassToPopupIfMedia(content, popup) {
+            var tempDiv = document.createElement('div');
+            tempDiv.innerHTML = content;
+            var imgTd = tempDiv.querySelector('td img');
+            if (imgTd) {
+                var src = imgTd.getAttribute('src');
+                if (/\.(jpg|jpeg|png|gif|bmp|webp|avif)$/i.test(src)) {
+                    popup._contentNode.classList.add('media');
+                    var img = popup._contentNode.querySelector('td img');
+                    if (img) {
+                        // If already loaded (cache), update immediately
+                        if (img.complete && img.naturalHeight > 0) {
+                            popup.update();
+                        } else {
+                            img.addEventListener('load', function() {
+                                popup.update();
+                            });
+                            img.addEventListener('error', function() {
+                                popup.update();
+                            });
+                        }
+                    }
+                } else if (/\.(mp3|wav|ogg|aac)$/i.test(src)) {
+                    var audio = document.createElement('audio');
+                    audio.controls = true;
+                    audio.src = src;
+                    imgTd.parentNode.replaceChild(audio, imgTd);
+                    popup._contentNode.classList.add('media');
+                    setTimeout(function() {
+                        popup.setContent(tempDiv.innerHTML);
+                        popup.update();
+                    }, 10);
+                } else if (/\.(mp4|webm|ogg|mov)$/i.test(src)) {
+                    var video = document.createElement('video');
+                    video.controls = true;
+                    video.src = src;
+                    video.style.width = "400px";
+                    video.style.height = "300px";
+                    video.style.maxHeight = "60vh";
+                    video.style.maxWidth = "60vw";
+                    imgTd.parentNode.replaceChild(video, imgTd);
+                    popup._contentNode.classList.add('media');
+                    // Aggiorna il popup quando il video carica i metadati
+                    video.addEventListener('loadedmetadata', function() {
+                        popup.update();
+                    });
+                    setTimeout(function() {
+                        popup.setContent(tempDiv.innerHTML);
+                        popup.update();
+                    }, 10);
+                } else {
+                    popup._contentNode.classList.remove('media');
+                }
+            } else {
+                popup._contentNode.classList.remove('media');
+            }
+        }
+
+        var zoomControl = L.control.zoom({
+            position: 'topleft'
+        }).addTo(map);
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_CartoVoyagerLabels_0');
+        map.getPane('pane_CartoVoyagerLabels_0').style.zIndex = 400;
+        var layer_CartoVoyagerLabels_0 = L.tileLayer('https://cartodb-basemaps-a.global.ssl.fastly.net/rastertiles/voyager/{z}/{x}/{y}.png', {
+            pane: 'pane_CartoVoyagerLabels_0',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 27,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_CartoVoyagerLabels_0;
+        map.addLayer(layer_CartoVoyagerLabels_0);
+        function pop_ANIMALxRegistos_1(feature, layer) {
+            var props = feature.properties;
+
+            console.log("Dados do Ponto:", props.nome_comum, props);
+
+            // --- 1. EFEITO HOVER (Tooltip da primeira imagem) ---
+            var textoHover = `
+                <div class="tooltip-animalx">
+                    <strong>${props.nome_comum || 'Desconhecido'}</strong><br>
+                    <span>${props.tipologia || ''} | ${props.primeira_d || ''}</span>
+                </div>
+            `;
+            // Ativa o balão ao passar o rato
+            layer.bindTooltip(textoHover, { direction: 'top', offset: [0, -20], className: 'estilo-tooltip' });
+
+            // --- 2. EFEITO CLIQUE (Popup da segunda imagem) ---
+            
+            // Lógica condicional para as Datas
+            var textoData = "";
+                if (props.primeira_d === 'Indeterminada') {
+                    textoData = "Indeterminada";
+                } else if (props.ano_inicio === props.ano_fim) {
+                    textoData = props.ano_inicio || ''; // Se forem iguais, mostra só uma vez
+                } else {
+                    textoData = (props.ano_inicio || '') + " - " + (props.ano_fim || '');
+                }
+
+        // 1. Definição da imagem ou do logo de fallback
+            var temImagem = props.caminho_fo && String(props.caminho_fo).trim() !== "";
+                        
+            var caminhoFinal = temImagem 
+                ? "images/" + String(props.caminho_fo).replace(/[\\/:]/g, '_').trim() 
+                : "images/animalx_corvo.png";
+
+            
+            var classeImagem = (props.caminho_fo && String(props.caminho_fo).trim() !== "") ? "cartao-img" : "cartao-img-logo";
+
+
+            // 2. A estrutura do Cartão de Apresentação
+            var textoPopup = `
+                <div class="cartao-popup">
+                    <div class="cartao-esquerda">
+                        <img src="${caminhoFinal}" class="${classeImagem}" alt="Imagem">
+                    </div>
+                    <div class="cartao-direita">
+                        <h2>${props.nome_comum || 'Desconhecido'}</h2>
+                        <h4 class="cientifico">${props.nome_cient || ''}</h4>
+                        
+                       <ul class="lista-dados">
+                            <li><strong>Tipologia:</strong> ${props.tipologia || ''}</li>
+                            <li><strong>Data:</strong> ${textoData}</li>
+                            <li><strong>Localização:</strong> ${props.localizaca || ''}</li>
+                            <li><strong>Descrição:</strong> ${props.descricao || ''}</li>
+                        </ul>
+                                              
+                        <a href="${props.hiperligac || '#'}" target="_blank" class="btn-ver-mais">VER REGISTO COMPLETO</a>
+                    </div>
+                </div>
+            `;
+            layer.bindPopup(textoPopup, { maxWidth: 720, minWidth: 620 });;
+
+            layer.on('popupopen', function(e) {
+                var img = e.popup._contentNode.querySelector('.cartao-img');
+                if (img) {
+                    if (img.complete && img.naturalHeight > 0) {
+                        e.popup.update();
+                    } else {
+                        img.addEventListener('load', function() { e.popup.update(); });
+                        img.addEventListener('error', function() { e.popup.update(); });
+                    }
+                }
+            });
+        }
+
+    // --- INÍCIO CLUSTER E CAMADA GEOJSON ---
+            map.createPane('pane_ANIMALxRegistos_1');
+            map.getPane('pane_ANIMALxRegistos_1').style.zIndex = 402;
+            map.getPane('pane_ANIMALxRegistos_1').style['mix-blend-mode'] = 'normal';
+
+            // 1. Inicializar o Grupo de Clusters (A Teia de Aranha)
+            var marcadoresCluster = L.markerClusterGroup({
+                maxClusterRadius: 40,        
+                spiderfyOnMaxZoom: true,     
+                showCoverageOnHover: false,  
+                zoomToBoundsOnClick: true    
+            });
+
+            // 2. Carregar os dados (usando a variável json_ANIMALxRegistos_1 que o qgis2web gerou)
+            var layer_ANIMALxRegistos_1 = L.geoJSON(json_ANIMALxRegistos_1, {
+                pane: 'pane_ANIMALxRegistos_1',
+                onEachFeature: pop_ANIMALxRegistos_1, // Mantém os popups antigos a funcionar por agora
+                pointToLayer: function (feature, latlng) {
+                    return L.marker(latlng, {
+                        icon: criarIconeDinamico(feature)
+                    });
+                }
+            });
+
+            // 3. Adicionar ao mapa
+            marcadoresCluster.addLayer(layer_ANIMALxRegistos_1);
+            bounds_group.addLayer(marcadoresCluster);
+            map.addLayer(marcadoresCluster);
+
+            // --- INÍCIO DO MENU DE FILTROS ---
+                           
+           // --- INÍCIO DA LIGAÇÃO AO NOVO DASHBOARD ---
+            var filtroRegistoAtivo = 'todos';
+
+            // 1. Ouvintes para os Botões de Tipo de Registo (Topo Esquerda)
+            document.querySelectorAll('.btn-filtro').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    // Remove estado visual ativo de todos
+                    document.querySelectorAll('.btn-filtro').forEach(b => b.classList.remove('ativo'));
+                    // Fica ativo o que foi clicado
+                    this.classList.add('ativo');
+                    // Regista o filtro e atualiza o mapa
+                    filtroRegistoAtivo = this.getAttribute('data-filtro');
+                    atualizarFiltros();
+                });
+            });
+
+            // 2. Ouvinte para a Pesquisa de Espécie (Centro)
+            document.getElementById('pesquisa-especie').addEventListener('input', atualizarFiltros);
+
+            // 3. Ouvintes para os Dropdowns (Direita)
+
+            function configurarDropdownMulti(idContainer) {
+                var container = document.getElementById(idContainer);
+                var btn = container.querySelector('.btn-dropdown');
+                var conteudo = container.querySelector('.dropdown-conteudo');
+                var opcaoMaster = container.querySelector('.opcao-master');
+                var checkMaster = opcaoMaster.querySelector('input');
+                var checksSecundarios = container.querySelectorAll('.filtro-check');
+
+                // 1. Abrir/Fechar
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    // Fecha outros que estejam abertos
+                    document.querySelectorAll('.dropdown-conteudo').forEach(c => {
+                        if (c !== conteudo) c.classList.remove('aberto');
+                    });
+                    conteudo.classList.toggle('aberto');
+                });
+
+                conteudo.addEventListener('click', function(e) {
+                    e.stopPropagation(); // Impede que o clique nas opções feche o menu
+                });
+
+                // 2. Lógica da opção "Todos"
+                opcaoMaster.addEventListener('change', function() {
+                    if (checkMaster.checked) {
+                        opcaoMaster.classList.add('selecionado');
+                        checksSecundarios.forEach(opt => {
+                            opt.checked = false;
+                            opt.parentElement.classList.remove('selecionado');
+                        });
+                        btn.textContent = opcaoMaster.textContent.trim();
+                        atualizarFiltros();
+                    } else if (Array.from(checksSecundarios).filter(o => o.checked).length === 0) {
+                        checkMaster.checked = true; // Previne ficar tudo vazio
+                    }
+                });
+
+                // 3. Lógica das restantes opções
+                checksSecundarios.forEach(opt => {
+                    opt.addEventListener('change', function() {
+                        var label = opt.parentElement;
+                        if (opt.checked) {
+                            label.classList.add('selecionado');
+                            checkMaster.checked = false;
+                            opcaoMaster.classList.remove('selecionado');
+                        } else {
+                            label.classList.remove('selecionado');
+                        }
+
+                        var ativas = Array.from(checksSecundarios).filter(o => o.checked);
+                        if (ativas.length === 0) {
+                            checkMaster.checked = true;
+                            opcaoMaster.classList.add('selecionado');
+                            btn.textContent = opcaoMaster.textContent.trim();
+                        } else if (ativas.length === 1) {
+                            btn.textContent = ativas[0].parentElement.textContent.trim();
+                        } else {
+                            btn.textContent = ativas.length + " Selecionados"; // Altera o texto do botão
+                        }
+                        atualizarFiltros();
+                    });
+                });
+            }
+
+            configurarDropdownMulti('dd-tipologia');
+            configurarDropdownMulti('dd-seculo');
+
+            // Fechar menus ao clicar no resto da página
+            document.addEventListener('click', function() {
+                document.querySelectorAll('.dropdown-conteudo').forEach(c => c.classList.remove('aberto'));
+            });
+
+
+            // 4. Lógica de Interação da Linha do Tempo (Sidebar)
+            var slider = document.getElementById('slider-ano');
+            var display = document.getElementById('ano-display');
+            var btnPlay = document.getElementById('btn-play');
+            var timerPlay;
+            var aTocar = false;
+
+            slider.addEventListener('input', function() {
+                if (this.value == 1099) {
+                    display.textContent = "Todos os Anos";
+                } else {
+                    display.textContent = "Ano: " + this.value;
+                }
+                atualizarFiltros();
+            });
+
+            btnPlay.addEventListener('click', function() {
+                if (aTocar) {
+                    clearInterval(timerPlay);
+                    this.textContent = "▶";
+                    aTocar = false;
+                } else {
+                    this.textContent = "⏸";
+                    aTocar = true;
+                    
+                    if (slider.value == 1099 || slider.value == 2026) {
+                        slider.value = 1100;
+                    }
+                    
+                    timerPlay = setInterval(function() {
+                        var valAtual = parseInt(slider.value);
+                        if (valAtual >= 2026) {
+                            clearInterval(timerPlay);
+                            btnPlay.textContent = "▶";
+                            aTocar = false;
+                        } else {
+                            slider.value = valAtual + 5;
+                            display.textContent = "Ano: " + slider.value;
+                            atualizarFiltros();
+                        }
+                    }, 300);
+                }
+            });
+
+            function getCategoriaRegisto(props) {
+                if (props.layer === 'Registos obtidos através da Ação de Ciência Cidadã') return 'Registos obtidos através da Ação de Ciência Cidadã';
+                if (props.conjunto === 'ANIMALx Espaços') return 'ANIMALx Espaços';
+                if (props.conjunto === 'ANIMALx Representações') return 'ANIMALx Representações';
+                return 'Outro';
+            }
+
+            // 5. Função Central de Filtragem (adaptada à nova grelha)
+            function atualizarFiltros() {
+                var termoPesquisa = document.getElementById('pesquisa-especie').value.toLowerCase().trim();
+                var tipologiasSelecionadas = Array.from(document.querySelectorAll('#dd-tipologia .filtro-check:checked')).map(cb => cb.value);
+                var seculosSelecionados = Array.from(document.querySelectorAll('#dd-seculo .filtro-check:checked')).map(cb => cb.value);
+
+                marcadoresCluster.clearLayers();
+
+                var dadosFiltrados = {
+                    type: "FeatureCollection",
+                    features: json_ANIMALxRegistos_1.features.filter(function(feature) {
+                        var props = feature.properties;
+                        
+                        // Validação 1: Texto
+                        var nomeComum = props.nome_comum ? String(props.nome_comum).toLowerCase() : '';
+                        var matchPesquisa = termoPesquisa === "" || nomeComum.includes(termoPesquisa);
+                        if (!matchPesquisa) return false;
+
+                        // Validação 2: Categoria Registo (Botões)
+                        var categoriaPonto = getCategoriaRegisto(props);
+                        if (filtroRegistoAtivo !== 'todos' && categoriaPonto !== filtroRegistoAtivo) return false;
+                        
+                        // Validação 3: Tipologia Animal (Dropdown)
+                        if (tipologiasSelecionadas.length > 0) {
+                        var tipologia = props.tipologia || '';
+                        var passaTipo = tipologiasSelecionadas.some(t => tipologia.includes(t));
+                        if (!passaTipo) return false;
+                        }
+
+                        // Validação 4: Cronologia (Dropdown)
+                         if (seculosSelecionados.length > 0) {
+                            var inicio = props.ano_inicio;
+                            var fim = props.ano_fim;
+                            var primeira_d = props.primeira_d;
+                            
+                            var passaSeculo = seculosSelecionados.some(sec => {
+                                if (sec === 'Indeterminada') return primeira_d === 'Indeterminada';
+                                var s = parseInt(sec);
+                                if (s === 12) return (inicio <= 1200 && fim >= 1101);
+                                if (s === 13) return (inicio <= 1300 && fim >= 1201);
+                                if (s === 14) return (inicio <= 1400 && fim >= 1301);
+                                if (s === 15) return (inicio <= 1500 && fim >= 1401);
+                                if (s === 16) return (inicio <= 1600 && fim >= 1501);
+                                if (s === 17) return (inicio <= 1700 && fim >= 1601);
+                                if (s === 18) return (inicio <= 1800 && fim >= 1701);
+                                if (s === 19) return (inicio <= 1900 && fim >= 1801);
+                                if (s === 20) return (inicio <= 2000 && fim >= 1901);
+                                if (s === 21) return (inicio <= 2100 && fim >= 2001);
+                                return false;
+                            });
+                            if (!passaSeculo) return false;
+                        }
+                   
+                        // Validação 5: Efeito Temporal (Slider Sidebar)
+                        var anoSlider = parseInt(document.getElementById('slider-ano').value);
+                        if (anoSlider > 1099) { 
+                            if (props.primeira_d === 'Indeterminada') {
+                                return false; 
+                            } else {
+                                // 1. Tenta usar os campos QGIS primeiro (A tua prioridade)
+                                var strInicio = String(props.pd_QGIS || "");
+                                var strFim = String(props.ud_QGIS || "");
+                                var matchInicio = strInicio.match(/\d{4}/);
+                                var matchFim = strFim.match(/\d{4}/);
+                                
+                                var inicioSlider = matchInicio ? parseInt(matchInicio[0]) : null;
+                                var fimSlider = matchFim ? parseInt(matchFim[0]) : null;
+                                
+                                // 2. Fallback (Plano B): Se o QGIS estiver vazio, vai buscar as datas base
+                                if (inicioSlider === null) {
+                                    inicioSlider = props.ano_inicio ? parseInt(props.ano_inicio) : 0;
+                                }
+                                if (fimSlider === null) {
+                                    fimSlider = props.ano_fim ? parseInt(props.ano_fim) : 9999;
+                                }
+                                
+                                // 3. A regra de ouro: O ano do slider tem de estar entre o início e o fim
+                                if (!(anoSlider >= inicioSlider && anoSlider <= fimSlider)) return false;
+                            }
+                        }
+
+                        // Passou todas as validações do dashboard
+                        return true;
+                    })
+                }; 
+
+                // --- REMOVER REGISTOS DUPLICADOS (Sobretudo Representações vs Ciência Cidadã) ---
+                var featuresUnicas = [];
+                var chavesVistas = new Set();
+
+                dadosFiltrados.features.forEach(function(f) {
+                    var props = f.properties;
+                    // Cria uma chave única baseada no Nome e na Localização (ou Hiperligação, se existir)
+                    var chaveUnica = (props.nome_comum || '') + "|" + (props.localizaca || '');
+                    
+                    if (!chavesVistas.has(chaveUnica)) {
+                        chavesVistas.add(chaveUnica);
+                        featuresUnicas.push(f);
+                    }
+                });
+
+                // Substitui a lista com duplicados pela lista limpa
+                dadosFiltrados.features = featuresUnicas;
+                // --- FIM DA DESDUPLICAÇÃO ---
+
+            // ---  LÓGICA DE ALTERNÂNCIA PARA MISTURAR OS TIPOS DE REGISTO NA SIDEBAR ---
+                var grupos = {
+                    'ANIMALx Espaços': [],
+                    'ANIMALx Representações': [],
+                    'Registos obtidos através da Ação de Ciência Cidadã': [],
+                    'Outro': []
+                };
+
+                // 1. Separar os pontos filtrados pelas respetivas "gavetas"
+                dadosFiltrados.features.forEach(function(f) {
+                    var cat = getCategoriaRegisto(f.properties);
+                    if(grupos[cat]) {
+                        grupos[cat].push(f);
+                    } else {
+                        grupos['Outro'].push(f);
+                    }
+                });
+
+                var featuresMisturadas = [];
+                var categorias = Object.keys(grupos);
+                var haMaisPontos = true;
+
+                // 2. Tirar um ponto de cada gaveta à vez até estarem todas vazias
+                while (haMaisPontos) {
+                    haMaisPontos = false;
+                    categorias.forEach(function(cat) {
+                        if (grupos[cat].length > 0) {
+                            featuresMisturadas.push(grupos[cat].shift());
+                            haMaisPontos = true;
+                        }
+                    });
+                }
+
+                // 3. Substituir o array original pelo array perfeitamente alternado
+                dadosFiltrados.features = featuresMisturadas;
+                // --- FIM DA LÓGICA DE ALTERNÂNCIA ---
+
+
+
+                var novaCamada = L.geoJSON(dadosFiltrados, {
+                    onEachFeature: pop_ANIMALxRegistos_1,
+                    pointToLayer: function (feature, latlng) {
+                        return L.marker(latlng, { icon: criarIconeDinamico(feature) });
+                    }
+                });
+
+                marcadoresCluster.addLayer(novaCamada);
+
+                // --- RENDERIZAR LISTA DE PREVIEWS NA SIDEBAR ---
+                var listaContainer = document.getElementById('lista-preview');
+                listaContainer.innerHTML = ''; 
+
+                // Criamos um dicionário global para guardar os marcadores ativos e podermos abri-los depois
+                window.camadasAtuais = {};
+
+                // Iterar sobre as camadas reais do Leaflet para construir os cartões
+                novaCamada.eachLayer(function(layer) {
+                    var props = layer.feature.properties;
+                    
+                    // Guardar a camada no dicionário através do seu ID interno
+                    var layerId = novaCamada.getLayerId(layer);
+                    window.camadasAtuais[layerId] = layer;
+                    
+                    // 1. Imagem e Logo
+                    var temImagem = props.caminho_fo && String(props.caminho_fo).trim() !== "";
+                    var caminhoFinal = temImagem 
+                        ? "images/" + String(props.caminho_fo).replace(/[\\/:]/g, '_').trim() 
+                        : "images/animalx_corvo.png";
+                    var classeImagem = temImagem ? "preview-img-foto" : "preview-img-logo";
+
+                    // 2. Extração de Textos
+                    var nomeComum = props.nome_comum || 'Desconhecido';
+                    var tipologia = props.tipologia || 'Sem tipologia';
+                    
+                    // Correção da data na pré-visualização também
+                    var textoData = "";
+                    if (props.primeira_d === 'Indeterminada') {
+                        textoData = "Indeterminada";
+                    } else if (props.ano_inicio === props.ano_fim) {
+                        textoData = props.ano_inicio || '';
+                    } else {
+                        textoData = (props.ano_inicio || '') + " - " + (props.ano_fim || '');
+                    }
+                    
+                    // 3. Limpar o nome do Tipo de Registo para o Balão
+                    var tipoRegisto = getCategoriaRegisto(props);
+                    var badgeTexto = tipoRegisto.replace('ANIMALx ', '').replace('Registos obtidos através da Ação de ', '');
+
+                    // 4. Estrutura HTML do Cartão (Removido o Nome Científico e adicionada a nova função de clique)
+                    var cartaoHTML = `
+                        <div class="card-preview" onclick="focarAbrirPopup(${layerId})">
+                            <div class="preview-img-container">
+                                <img src="${caminhoFinal}" class="${classeImagem}" alt="${nomeComum}">
+                            </div>
+                            <div class="preview-content">
+                                <h4>${nomeComum}</h4>
+                                <div class="preview-meta-top">
+                                    <span class="badge-tipo">${badgeTexto}</span>
+                                </div>
+                                <div class="preview-meta-bottom">
+                                    <span>${tipologia}</span>
+                                    <span class="separador">|</span>
+                                    <span>${textoData}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    listaContainer.insertAdjacentHTML('beforeend', cartaoHTML);
+                });
+            }
+            // --- FIM DA LIGAÇÃO AO NOVO DASHBOARD ---
+            // --- FIM DA CAMADA GEOJSON ---
+            atualizarFiltros();
+            // --- FUNÇÃO PARA ABRIR POPUP A PARTIR DA SIDEBAR ---
+            window.focarAbrirPopup = function(layerId) {
+                var layer = window.camadasAtuais[layerId];
+                if (layer) {
+                    // O zoomToShowLayer desdobra o cluster (se necessário), centra o mapa e depois executa a função
+                    marcadoresCluster.zoomToShowLayer(layer, function() {
+                        layer.openPopup();
+                    });
+                }
+            };
+
+           
+
+            // --- CARREGAR CARTOGRAFIA HISTÓRICA VIA LOCAL ---
+
+            if (!map.getPane('pane_historico')) {
+                map.createPane('pane_historico');
+                map.getPane('pane_historico').style.zIndex = 401;
+                map.getPane('pane_historico').style.mixBlendMode = 'multiply';
+            }
+
+            // --- 2A. TINOCO (1650) ---
+            var limitesTinoco = [
+                [38.702215774, -9.151186257], 
+                [38.720704228, -9.111661260]
+            ];
+            var cartografiaTinocoLocal = L.imageOverlay('cartografia/cartografiaTinoco.png', limitesTinoco, {
+                opacity: 0.7,
+                pane: 'pane_historico'
+            });
+
+            // --- 2B. PLANTA TOPONÍMICA ---
+            var limitesToponimica = [
+                [38.689022816, -9.188148884], 
+                [38.750074013, -9.109098890] 
+            ];
+            var cartografiaToponimicaLocal = L.imageOverlay('cartografia/plantaToponimica.png', limitesToponimica, {
+                opacity: 0.7,
+                pane: 'pane_historico'
+            });
+
+            // --- 2C. FOLQUE (1856-1858) ---
+            var limitesFolque = [
+                [38.679282979, -9.226058571], 
+                [38.753236797, -9.067958583] 
+            ];
+            var cartografiaFolqueLocal = L.imageOverlay('cartografia/cartografiaFolque.png', limitesFolque, {
+                opacity: 0.7,
+                pane: 'pane_historico'
+            });
+
+
+            // --- 3. MENU DE CONTROLO ---
+            var mapasBase = { "Mapa Base": layer_CartoVoyagerLabels_0 };
+            
+            var camadasSobreposicao = {
+                "Registos ANIMALx": marcadoresCluster,
+                "Cartografia - Planta Toponímica": cartografiaToponimicaLocal,
+                "Cartografia - Tinoco (1650)": cartografiaTinocoLocal,
+                "Cartografia - Folque (1856-1858)": cartografiaFolqueLocal
+            };
+
+            L.control.layers(mapasBase, camadasSobreposicao, {
+                collapsed: true,
+                position: 'topleft'
+            }).addTo(map);
+        </script>        
+    </body>
+</html>
