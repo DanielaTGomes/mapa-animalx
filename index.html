@@ -23,86 +23,116 @@
             margin: 0;
         }
 
-            /* --- LAYOUT MOBILE OTIMIZADO (FLEXBOX ORDER) --- */
-        @media (max-width: 768px) {
-            /* 1. Transforma a página inteira numa coluna Flexbox */
-            body {
+            /* --- LAYOUT MOBILE OTIMIZADO --- */
+            @media (max-width: 768px) {
+            /* 1. LIBERTAR O SCROLL DA PÁGINA */
+            html, body {
+                height: auto !important; /* Remove a limitação de 100% de altura */
+                min-height: 100vh;
+                overflow-y: auto !important; /* Devolve o scroll natural ao telemóvel */
                 display: flex !important;
                 flex-direction: column !important;
-                overflow-x: hidden;
             }
 
-            /* 2. O Truque: Faz as caixas estruturais "derreterem" para podermos reordenar as peças livremente */
-            .dashboard-animalx,
-            .toolbar-animalx,
-            .main-animalx,
-            .sidebar-animalx {
+            .dashboard-animalx, .toolbar-animalx, .main-animalx, .sidebar-animalx {
                 display: contents !important; 
             }
 
-            /* ORDEM 1: Título e Abstract */
+            /* 2. AFASTAR OS MENUS E ARRUMAR ESPAÇAMENTOS */
             .header-animalx { 
                 order: 1; 
                 padding: 10px 15px;
+                margin-bottom: 5px;
             }
 
-            /* ORDEM 2: Filtros Rápidos (Botões) */
             .toolbar-esq { 
                 order: 2; 
                 display: flex;
-                overflow-x: auto; /* Permite fazer scroll horizontal aos botões */
+                overflow-x: auto;
                 white-space: nowrap;
-                padding: 10px;
-                gap: 5px;
-            }
-
-            /* ORDEM 3: Barra de Pesquisa */
-            .toolbar-centro { 
-                order: 3; 
-                padding: 5px 10px;
-            }
-
-            /* ORDEM 4: Menus Dropdown */
-            .toolbar-dir { 
-                order: 4; 
-                padding: 5px 10px;
-                display: flex;
+                padding: 5px 15px 15px 15px !important; /* Espaço inferior para não bater na pesquisa */
                 gap: 10px;
             }
 
-            /* ORDEM 5: O Mapa! */
+            .toolbar-centro { 
+                order: 3; 
+                padding: 5px 15px 15px 15px !important;
+            }
+
+            .toolbar-dir { 
+                order: 4; 
+                padding: 5px 15px 15px 15px;
+                display: flex;
+                flex-direction: column; /* Coloca os filtros em coluna no telemóvel para não cortarem */
+                gap: 10px;
+            }
+
+            /* 3. O MAPA */
             #mapa-container {
                 order: 5;
                 width: 100% !important;
-                height: 45vh !important; /* Ocupa 45% da altura do ecrã do telemóvel */
+                height: 50vh !important; /* Ocupa 50% do ecrã visível */
+                min-height: 380px; /* Mas nunca menos que 380px para não esmagar a interface */
                 position: relative !important;
-                margin-top: 10px;
+                margin-top: 5px;
+                z-index: 1; 
             }
-            #map {
-                height: 100% !important;
-            }
+            #map { height: 100% !important; }
 
-            /* ORDEM 6: Slider Temporal (Logo debaixo do mapa) */
+            /* 4. LINHA TEMPORAL E RESULTADOS */
             .timeline-container { 
                 order: 6; 
-                padding: 15px 10px;
+                padding: 15px 15px;
                 background-color: white; 
                 border-bottom: 1px solid #eee;
             }
-
-            /* ORDEM 7: A Lista de Resultados/Cartões */
             .titulo-sidebar {
                 order: 7;
-                padding: 10px 10px 0 10px;
-                margin-bottom: 5px;
+                padding: 15px 15px 5px 15px;
             }
             #lista-preview { 
                 order: 8; 
                 width: 100%;
-                flex-grow: 1; /* Ocupa o resto do ecrã disponível */
-                overflow-y: auto; /* Permite fazer scroll pelos animais */
-                padding: 10px;
+                padding: 10px 15px;
+                overflow: visible !important; /* Como a página já faz scroll, a lista também faz */
             }
+
+            /* --- 5. CORRIGIR O POPUP GIGANTE --- */
+            /* Controlar a "caixa" do Leaflet */
+            .leaflet-popup {
+                width: 85vw !important; /* Limita a largura a 85% do ecrã do telemóvel */
+            }
+            .leaflet-popup-content {
+                width: 100% !important;
+                max-width: 100% !important; /* Força a anular o minWidth: 620 do JavaScript */
+                margin: 0 !important;
+            }
+            /* Controlar o teu design dentro do Popup */
+            .cartao-popup {
+                display: flex !important;
+                flex-direction: column !important; /* Põe a imagem em cima e o texto em baixo */
+                width: 100% !important;
+                min-width: 0 !important; /* Remove o bloqueio de largura */
+            }
+            .cartao-esquerda {
+                width: 100% !important;
+                height: 180px !important; /* Altura fixa para não ocupar o ecrã todo */
+                border-right: none !important;
+                border-bottom: 1px solid #ccc;
+            }
+            .cartao-esquerda img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 12px 12px 0 0 !important;
+            }
+            .cartao-direita {
+                width: 100% !important;
+                padding: 15px !important;
+                box-sizing: border-box;
+            }
+            .cartao-direita h2 { font-size: 1.2rem !important; margin-top: 0; }
+            .cartao-direita ul { padding-left: 15px !important; font-size: 0.9rem; }
         }
         </style>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
