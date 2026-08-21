@@ -249,28 +249,28 @@
 
 /* 1. Cluster Pequeno (< 10 marcadores) */
 .marker-cluster-small {
-    background-color: rgba(182, 149, 192, 0.6) !important; /* Anel exterior mais claro */
+    background-color: rgba(165, 172, 220, 0.6) !important; /* Anel exterior mais claro */
 }
 .marker-cluster-small div {
-    background-color: rgba(113, 62, 131, 0.9) !important; /* Círculo interior */
+    background-color: rgba(108, 117, 183, 0.9) !important; /* Círculo interior */
     color: white !important; /* Cor do número (branco para legibilidade) */
 }
 
 /* 2. Cluster Médio (10 a 99 marcadores) */
 .marker-cluster-medium {
-    background-color: rgba(113, 62, 131, 0.6) !important; 
+    background-color: rgba(108, 117, 183, 0.6) !important; 
 }
 .marker-cluster-medium div {
-    background-color: rgba(69, 31, 89, 0.9) !important; 
+    background-color: rgba(58, 65, 100, 0.9) !important; 
     color: white !important;
 }
 
 /* 3. Cluster Grande (> 100 marcadores) */
 .marker-cluster-large {
-    background-color: rgba(69, 31, 89, 0.6) !important;
+    background-color: rgba(58, 65, 100, 0.6) !important;
 }
 .marker-cluster-large div {
-    background-color: rgba(43, 14, 59, 0.9) !important; /* Roxo muito escuro */
+    background-color: rgba(33, 38, 59, 0.9) !important; /* Roxo muito escuro */
     color: white !important;
 }
 
@@ -303,7 +303,7 @@
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.15);
     font-family: 'Nohemi', sans-serif; /* Atualizado para Nohemi */
-    color: #451f59;
+    color: #3a4164;
     max-height: 65vh;
     overflow-y: auto;
     width: 260px;
@@ -313,7 +313,7 @@
     margin: 15px 0 10px 0;
     font-size: 15px;
     font-weight: bold; /* Vai puxar o Nohemi-Bold.ttf automaticamente */
-    border-bottom: 2px solid #b695c0;
+    border-bottom: 2px solid #a5acdc;
     padding-bottom: 5px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -337,7 +337,7 @@
 
 .painel-filtros input[type="checkbox"] {
     margin-right: 10px;
-    accent-color: #713e83;
+    accent-color: #6c75b7;
     transform: scale(1.1);
 }
 
@@ -347,7 +347,7 @@
     align-items: center;
     cursor: pointer;
     font-weight: bold;
-    border-bottom: 2px solid #b695c0;
+    border-bottom: 2px solid #a5acdc;
     padding-bottom: 8px;
     margin-bottom: 10px;
 }
@@ -362,7 +362,7 @@
     background: none;
     border: none;
     font-size: 18px;
-    color: #451f59;
+    color: #3a4164;
     cursor: pointer;
     font-weight: bold;
 }
@@ -371,7 +371,7 @@
     width: 100%;
     padding: 6px 8px;
     margin-bottom: 15px;
-    border: 1px solid #b695c0;
+    border: 1px solid #a5acdc;
     border-radius: 4px;
     font-family: 'Nohemi', sans-serif;
     box-sizing: border-box;
@@ -381,8 +381,8 @@
 .grupo-master {
     font-weight: bold;
     margin-bottom: 6px;
-    color: #713e83;
-    border-bottom: 1px dashed #e0d0e5;
+    color: #6c75b7;
+    border-bottom: 1px dashed #d8dceb;
     padding-bottom: 4px;
 }
 
@@ -394,7 +394,7 @@
 .info h2 {
     font-family: 'Nohemi', sans-serif !important;
     font-weight: bold !important;
-    color: #451f59 !important; /* Cor roxa alinhada com o projeto */
+    color: #3a4164 !important; /* Cor roxa alinhada com o projeto */
     font-size: 60px !important;
     letter-spacing: 0.3px;
 }
@@ -408,13 +408,13 @@
 .leaflet-popup-content th, 
 .leaflet-popup-content td {
     font-family: 'Nohemi', sans-serif !important;
-    color: #451f59 !important; /* Mantém o tom de roxo do projeto nos metadados */
+    color: #3a4164 !important; /* Mantém o tom de roxo do projeto nos metadados */
 }
 
 .leaflet-popup-content h3 {
     font-family: 'Nohemi', sans-serif !important;
     font-weight: bold !important;
-    color: #451f59 !important;
+    color: #3a4164 !important;
 }
 
 /* --- BARRA DE EFEITO TEMPORAL (SLIDER) --- */
@@ -424,7 +424,7 @@
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.15);
     font-family: 'Nohemi', sans-serif;
-    color: #451f59;
+    color: #3a4164;
     display: flex;
     align-items: center;
     gap: 15px;
@@ -434,8 +434,8 @@
 }
 
 .btn-play {
-    background: #713e83;
-    color: white;
+    
+    color: #6c75b7;
     border: none;
     border-radius: 50%;
     width: 35px;
@@ -469,7 +469,7 @@
 #ano-display {
     font-size: 16px;
     font-weight: bold;
-    color: #713e83;
+    color: #6c75b7;
 }
 
 .extremo-ano {
@@ -479,7 +479,7 @@
 }
 
 input[type=range] {
-    accent-color: #713e83;
+    accent-color: #6c75b7;
     width: 100%;
     cursor: pointer;
 }
@@ -487,7 +487,7 @@ input[type=range] {
 /* --- EFEITO HOVER (Tooltip) --- */
 .estilo-tooltip {
     background: white !important;
-    border: 1px solid #b695c0 !important;
+    border: 1px solid #a5acdc !important;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1) !important;
     border-radius: 6px !important;
     padding: 0 !important; /* Limpa o padding base do Leaflet */
@@ -496,7 +496,7 @@ input[type=range] {
 .tooltip-animalx {
     padding: 8px 12px;
     font-family: 'Nohemi', sans-serif;
-    color: #451f59;
+    color: #3a4164;
     font-size: 14px;
     text-align: center;
     line-height: 1.4;
@@ -521,7 +521,7 @@ input[type=range] {
     display: flex;
     flex-direction: row;
     font-family: 'Nohemi', sans-serif;
-    color: #451f59;
+    color: #3a4164;
     align-items: stretch; /* Força a imagem a ter exatamente a mesma altura do bloco de texto */
 }
 
@@ -536,7 +536,7 @@ input[type=range] {
     height: 100%; /* Preenche a altura total da caixa sem espaços em branco */
     object-fit: cover; /* Recorta proporcionalmente sem distorcer */
     display: block;
-    border-right: 2px solid #e0d0e5;
+    border-right: 2px solid #d8dceb;
 }
 
 
@@ -549,7 +549,7 @@ input[type=range] {
     padding: 45px;
     background-color: #f4f0f5;
     box-sizing: border-box;
-    border-right: 2px solid #e0d0e5;
+    border-right: 2px solid #d8dceb;
 }
 
 /* Bloco da Informação (Direita) */
@@ -584,13 +584,14 @@ input[type=range] {
 }
 
 .lista-dados li strong {
-    color: #713e83;
+    color: #6c75b7;
+    font-weight:500;
 }
 
 /* Botão de Hiperligação */
 .btn-ver-mais {
     display: block;
-    background: #2b0e3b; /* Roxo muito escuro para contraste */
+    background: #21263b; /* Roxo muito escuro para contraste */
     color: white !important;
     text-align: center;
     padding: 10px;
@@ -603,12 +604,12 @@ input[type=range] {
 }
 
 .btn-ver-mais:hover {
-    background: #713e83;
+    background: #6c75b7;
 }
 
 /* Redesenho do botão Fechar 'X' */
 .leaflet-popup-close-button {
-    color: #451f59 !important;
+    color: #3a4164 !important;
     font-size: 20px !important;
     padding: 5px 8px !important;
     z-index: 10;
@@ -621,7 +622,7 @@ body, html {
     height: 100vh;
     font-family: 'Nohemi', sans-serif;
     background-color: #fbf9fb; 
-    color: #451f59;
+    color: #3a4164;
     overflow: hidden; 
 }
 
@@ -635,13 +636,21 @@ body, html {
 .header-animalx {
     padding: 15px 30px 10px 30px;
     background-color: #ffffff;
+    display: flex;
+    justify-content: space-between; /* Empurra o texto para a esquerda e o logo para a direita */
+    align-items: center; /* Centra tudo perfeitamente na vertical */
+    gap: 20px; /* Cria uma margem de segurança para o texto nunca tocar no logo */
+}
+
+.header-texto {
+    flex: 1; /* Permite que os textos ocupem todo o espaço restante */
 }
 
 .header-animalx h1 {
     margin: 0 0 5px 0;
     font-size: 28px;
     font-weight: bold;
-    color: #451f59;
+    color: #3a4164;
     letter-spacing: 0.3px;
 }
 
@@ -649,6 +658,10 @@ body, html {
     margin: 0;
     font-size: 14px;
     opacity: 0.8;
+}
+.logo-canto-direito {
+    height: 80px; 
+    object-fit: contain;
 }
 
 /* 2. Barra de Ferramentas */
@@ -659,15 +672,15 @@ body, html {
     padding: 12px 30px;
     background-color: #ffffff;
     border-top: 1px solid #f4f0f5;
-    border-bottom: 2px solid #e0d0e5;
+    border-bottom: 2px solid #d8dceb;
 }
 
 .toolbar-esq { display: flex; gap: 8px; }
 
 .btn-filtro {
     background-color: #ffffff;
-    border: 1px solid #b695c0;
-    color: #451f59;
+    border: 1px solid #a5acdc;
+    color: #3a4164;
     padding: 6px 16px;
     border-radius: 20px;
     font-family: 'Nohemi', sans-serif;
@@ -677,19 +690,19 @@ body, html {
 }
 
 .btn-filtro:hover, .btn-filtro.ativo {
-    background-color: #451f59;
+    background-color: #3a4164;
     color: #ffffff;
-    border-color: #451f59;
+    border-color: #3a4164;
 }
 
 .toolbar-centro input {
     width: 300px;
     padding: 8px 15px;
-    border: 1px solid #b695c0;
+    border: 1px solid #a5acdc;
     border-radius: 20px;
     font-family: 'Nohemi', sans-serif;
     font-size: 13px;
-    color: #451f59;
+    color: #3a4164;
     outline: none;
 }
 
@@ -697,11 +710,11 @@ body, html {
 
 .select-animalx {
     padding: 8px 15px;
-    border: 1px solid #b695c0;
+    border: 1px solid #a5acdc;
     border-radius: 20px;
     font-family: 'Nohemi', sans-serif;
     font-size: 13px;
-    color: #451f59;
+    color: #3a4164;
     background-color: #ffffff;
     cursor: pointer;
     outline: none;
@@ -727,17 +740,88 @@ body, html {
 .sidebar-animalx {
     width: 380px;
     background-color: #ffffff;
-    border-left: 2px solid #e0d0e5;
+    border-left: 2px solid #d8dceb;
     display: flex;
     flex-direction: column;
     z-index: 1000; 
 }
 
+/* --- WIDGET TEMPORAL FLUTUANTE NO MAPA --- */
+        .widget-temporal-flutuante {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000; /* Fica acima do mapa */
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px; /* Bordas muito arredondadas para parecer um botão */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            transition: max-width 0.4s ease, border-radius 0.4s ease;
+            max-width: 400px; /* Tamanho quando aberto */
+            padding: 5px;
+        }
+
+        /* O estado inicial fechado */
+        .widget-temporal-flutuante.colapsado {
+            max-width: 40px; 
+            border-radius: 50%; /* Fica um círculo perfeito */
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .btn-toggle-tempo {
+            background: transparent;
+            border: none;
+            color: #6c75b7; /* O teu tom roxo */
+            font-size: 22px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: color 0.2s, transform 0.3s;
+        }
+
+        .btn-toggle-tempo:hover {
+            color: #3a4164;
+            transform: scale(1.1);
+        }
+
+        .timeline-conteudo {
+            width: 320px;
+            padding: 5px 15px 5px 5px;
+            display: flex;
+            flex-direction: column;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+            white-space: nowrap;
+        }
+
+        /* Esconde o conteúdo do slider quando colapsado */
+        .widget-temporal-flutuante.colapsado .timeline-conteudo {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Ajustes no telemóvel para não bater nas bordas */
+        @media (max-width: 768px) {
+            .widget-temporal-flutuante {
+                bottom: 15px;
+                left: 10px;
+            }
+            .widget-temporal-flutuante:not(.colapsado) {
+                border-radius: 15px;
+            }
+        }
+
 /* Linha do Tempo na Sidebar */
 .timeline-container {
     padding: 20px;
     background-color: #fbf9fb;
-    border-bottom: 2px solid #e0d0e5;
+    border-bottom: 2px solid #d8dceb;
 }
 
 .timeline-header {
@@ -757,7 +841,7 @@ body, html {
 .timeline-labels #ano-display {
     font-weight: bold;
     font-size: 16px;
-    color: #713e83;
+    color: #6c75b7;
 }
 
 .lista-preview {
@@ -775,7 +859,7 @@ body, html {
     display: flex;
     flex-direction: row;
     background-color: #ffffff;
-    border: 1px solid #e0d0e5;
+    border: 1px solid #d8dceb;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0,0,0,0.04);
@@ -787,14 +871,14 @@ body, html {
 .card-preview:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    border-color: #b695c0;
+    border-color: #a5acdc;
 }
 
 /* Área da Imagem Esquerda */
 .preview-img-container {
     flex: 0 0 95px; /* Largura fixa da imagem */
     background-color: #f4f0f5;
-    border-right: 1px solid #e0d0e5;
+    border-right: 1px solid #d8dceb;
 }
 
 .preview-img-foto {
@@ -825,7 +909,7 @@ body, html {
 .preview-content h4 {
     margin: 0 0 6px 0;
     font-size: 16px;
-    color: #2b0e3b;
+    color: #21263b;
     font-weight: 600;
 }
 
@@ -837,8 +921,8 @@ body, html {
 }
 
 .badge-tipo {
-    background-color: #e0d0e5;
-    color: #451f59;
+    background-color: #d8dceb;
+    color: #3a4164;
     padding: 2px 8px;
     border-radius: 12px;
     font-size: 11px;
@@ -862,7 +946,7 @@ body, html {
 }
 
 .preview-meta-bottom .separador {
-    color: #b695c0;
+    color: #a5acdc;
     font-weight: bold;
 }
 
@@ -874,11 +958,11 @@ body, html {
 
 .btn-dropdown {
     padding: 8px 15px;
-    border: 1px solid #b695c0;
+    border: 1px solid #a5acdc;
     border-radius: 20px;
     font-family: 'Nohemi', sans-serif;
     font-size: 13px;
-    color: #451f59;
+    color: #3a4164;
     background-color: #ffffff;
     cursor: pointer;
     min-width: 175px;
@@ -899,10 +983,10 @@ body, html {
     position: absolute;
     background-color: #ffffff;
     min-width: 100%;
-    box-shadow: 0px 8px 20px rgba(69, 31, 89, 0.15);
+    box-shadow: 0px 8px 20px rgba(58, 65, 100, 0.15);
     z-index: 2000; /* Garante que fica por cima do mapa (Leaflet) */
     border-radius: 8px;
-    border: 1px solid #e0d0e5;
+    border: 1px solid #d8dceb;
     margin-top: 8px;
     max-height: 280px;
     overflow-y: auto;
@@ -918,7 +1002,7 @@ body, html {
     padding: 10px 15px;
     cursor: pointer;
     font-size: 13px;
-    color: #451f59;
+    color: #3a4164;
     transition: all 0.2s;
     user-select: none;
     border-bottom: 1px solid #fbf9fb;
@@ -934,18 +1018,18 @@ body, html {
 
 /* O Segredo da Seleção: O fundo roxo! */
 .dropdown-conteudo label.selecionado {
-    background-color: #713e83;
+    background-color: #6c75b7;
     color: #ffffff;
     font-weight: 600;
 }
 
 /* --- AFINAÇÃO DO CONTROLO DE CAMADAS LEAFLET --- */
 .leaflet-control-layers {
-    border: 1px solid #b695c0 !important;
+    border: 1px solid #a5acdc !important;
     border-radius: 8px !important;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
     font-family: 'Nohemi', sans-serif !important;
-    color: #451f59 !important;
+    color: #3a4164 !important;
 }
 
 .leaflet-control-layers-toggle {
@@ -967,7 +1051,7 @@ body, html {
 
 .leaflet-control-layers input[type="checkbox"], 
 .leaflet-control-layers input[type="radio"] {
-    accent-color: #713e83; /* Cor roxa na seleção das caixas */
+    accent-color: #6c75b7; /* Cor roxa na seleção das caixas */
     transform: scale(1.1);
 }
 
@@ -975,7 +1059,7 @@ body, html {
             font-family: Arial, sans-serif; /* Ou a fonte que estiveres a usar */
             font-size: 16px;
             font-weight: bold;
-            color: #6D4C8D; /* O tom de roxo do teu projeto */
+            color: #535c8e; /* O tom de roxo do teu projeto */
             margin-top: 15px;
             margin-bottom: 10px;
             text-align: left; /* Podes mudar para 'center' se preferires centrado */
@@ -1037,7 +1121,7 @@ body, html {
             width: 50px;
             height: 50px;
             border: 5px solid #f3f3f3; /* Cinzento muito claro */
-            border-top: 5px solid #6D4C8D; /* O teu roxo */
+            border-top: 5px solid #535c8e; /* O teu roxo */
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin-bottom: 20px;
@@ -1046,7 +1130,7 @@ body, html {
         /* O texto de carregamento */
         .loading-text {
             font-family: Arial, sans-serif;
-            color: #6D4C8D;
+            color: #535c8e;
             font-weight: bold;
             font-size: 16px;
         }
@@ -1055,4 +1139,60 @@ body, html {
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
+        }
+
+    /* --- ESTILOS DO MENU DE CARTOGRAFIA NA SIDEBAR --- */
+        .painel-cartografia {
+            padding: 15px 20px;
+            background-color: #fbf9fb;
+            border-bottom: 2px solid #d8dceb;
+        }
+
+        .titulo-camadas {
+            font-family: 'Nohemi', sans-serif;
+            font-size: 15px;
+            font-weight: bold;
+            color: #3a4164;
+            margin: 0 0 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-transform: uppercase;
+        }
+
+        /* Domar o aspeto padrão do menu Leaflet para caber na sidebar perfeitamente */
+        #camadas-leaflet-aqui .leaflet-control-layers {
+            box-shadow: none !important;
+            border: none !important;
+            background: transparent !important;
+            padding: 0 !important;
+            color: #3a4164 !important;
+        }
+
+        #camadas-leaflet-aqui .leaflet-control-layers-list {
+            margin: 0;
+        }
+
+        #camadas-leaflet-aqui .leaflet-control-layers-overlays label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        #camadas-leaflet-aqui .leaflet-control-layers-toggle {
+            display: none !important;
+        }
+     
+        #camadas-leaflet-aqui.escondido {
+            display: none !important;
+        }
+
+        #seta-cartografia {
+            transition: transform 0.3s ease; /* Animação suave */
+        }
+
+        /* Roda a seta 180 graus (para cima) quando o menu abre */
+        #seta-cartografia.aberto {
+            transform: rotate(180deg);
         }

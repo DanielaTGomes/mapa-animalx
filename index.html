@@ -7,7 +7,6 @@
         <meta name="mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <link rel="stylesheet" href="css/leaflet.css">
-        <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
         <link rel="stylesheet" href="css/qgis2web.css">
         <link rel="stylesheet" href="css/fontawesome-all.min.css">
         <link rel="stylesheet" href="css/leaflet.photon.css">
@@ -309,6 +308,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <title>Mapa ANIMALx</title>
         
+        
     </head>
     <body>
         <!-- ECRÃ DE CARREGAMENTO -->
@@ -319,8 +319,11 @@
         <div class="dashboard-animalx">
             <!-- 1. Cabeçalho -->
             <header class="header-animalx">
-                <h1>Mapa ANIMALx</h1>
-                <p>Explore a história animal de Lisboa através dos seus espaços e representações espalhados pela cidade, bem como dos contributos de ciência cidadã.</p>
+                <div class="header-texto">
+                    <h1>Animais de Lisboa</h1>
+                    <p>Explore a história animal de Lisboa através dos seus espaços e representações espalhados pela cidade, bem como dos contributos de ciência cidadã.</p>
+                </div>
+                <img src="images/logo_completo_preto .png" alt="Logótipo do Projeto" class="logo-canto-direito">
             </header>
 
             <!-- 2. Barra de Ferramentas Unificada -->
@@ -376,23 +379,40 @@
                 <div id="mapa-container">
                     <!-- O teu mapa Leaflet entra aqui -->
                     <div id="map"></div> 
+                    
+                    <!-- NOVO WIDGET TEMPORAL FLUTUANTE -->
+                    <div class="widget-temporal-flutuante colapsado" id="widget-tempo">
+                        <button class="btn-toggle-tempo" id="btn-toggle-tempo" title="Mostrar/Esconder Linha do Tempo">
+                            <i class="fas fa-clock"></i> 
+                        </button>
+                        <div class="timeline-conteudo">
+                            <div class="timeline-header">
+                                <button id="btn-play" class="btn-play">▶</button>
+                                <div class="timeline-labels">
+                                    <span class="extremo-ano">Sec. XII</span>
+                                    <span id="ano-display">Todos os Anos</span>
+                                    <span class="extremo-ano">2026</span>
+                                </div>
+                            </div>
+                            <input type="range" id="slider-ano" min="1099" max="2026" value="1099" step="1">
+                        </div>
+                    </div>
                 </div>
                 
+                
                 <aside class="sidebar-animalx">
-                    <!-- Linha do Tempo integrada na Sidebar -->
-                    <div class="timeline-container">
-                        <h3 class="titulo-timeline">Pesquisa por ano</h3>
-                        <div class="timeline-header">
-                            <button id="btn-play" class="btn-play">▶</button>
-                            <div class="timeline-labels">
-                                <span class="extremo-ano">Sec. XII</span>
-                                <span id="ano-display">Todos os Anos</span>
-                                <span class="extremo-ano">2026</span>
-                            </div>
-                        </div>
-                        <input type="range" id="slider-ano" min="1099" max="2026" value="1099" step="1">
+                    
+                    <!-- NOVO MENU DE CARTOGRAFIA TEM DE ESTAR AQUI -->
+                    <div class="painel-cartografia">
+                        <h3 class="titulo-camadas" id="toggle-cartografia" style="cursor: pointer; justify-content: space-between;">
+                            <span><i class="fas fa-layer-group"></i> Cartografia Histórica</span>
+                            <i class="fas fa-chevron-down" id="seta-cartografia"></i>
+                        </h3>
+                        <!-- A classe 'escondido' faz com que inicie fechado por defeito -->
+                        <div id="camadas-leaflet-aqui" class="escondido"></div> 
                     </div>
 
+                    <!-- Linha do Tempo integrada na Sidebar (Apaga isto se já moveste para o mapa) -->
                     <!-- Lista de Previews -->
                     <h3 class="titulo-sidebar">Resultados:</h3>
                     <div id="lista-preview" class="lista-preview">
@@ -405,7 +425,6 @@
         <script src="js/qgis2web_expressions.js"></script>
         <script src="js/leaflet.js"></script>
         <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
-
         <script src="js/multi-style-layer.js"></script>
         <script src="js/leaflet.rotatedMarker.js"></script>
         <script src="js/leaflet.pattern.js"></script>
@@ -628,7 +647,7 @@
                         
             var caminhoFinal = temImagem 
                 ? "images/" + String(props.caminho_fo).replace(/[\\/:]/g, '_').trim() 
-                : "images/animalx_corvo.png";
+                : "images/icone_espaços.png";
 
             
             var classeImagem = (props.caminho_fo && String(props.caminho_fo).trim() !== "") ? "cartao-img" : "cartao-img-logo";
@@ -795,12 +814,26 @@
             });
 
 
-            // 4. Lógica de Interação da Linha do Tempo (Sidebar)
+    // 4. Lógica de Interação da Linha do Tempo (Sidebar)
             var slider = document.getElementById('slider-ano');
             var display = document.getElementById('ano-display');
             var btnPlay = document.getElementById('btn-play');
             var timerPlay;
             var aTocar = false;
+
+            var btnToggleTempo = document.getElementById('btn-toggle-tempo');
+            var widgetTempo = document.getElementById('widget-tempo');
+            
+            btnToggleTempo.addEventListener('click', function() {
+                widgetTempo.classList.toggle('colapsado');
+                
+                // Muda a cor do relógio para indicar se está ativo
+                if(widgetTempo.classList.contains('colapsado')) {
+                    btnToggleTempo.style.color = '#6c75b7';
+                } else {
+                    btnToggleTempo.style.color = '#3a4164';
+                }
+            });
 
             slider.addEventListener('input', function() {
                 if (this.value == 1099) {
@@ -808,7 +841,7 @@
                 } else {
                     display.textContent = "Ano: " + this.value;
                 }
-                atualizarFiltros();
+                atualizarFiltros(); // VOLTA A LIGAR AQUI
             });
 
             btnPlay.addEventListener('click', function() {
@@ -819,11 +852,9 @@
                 } else {
                     this.textContent = "⏸";
                     aTocar = true;
-                    
                     if (slider.value == 1099 || slider.value == 2026) {
                         slider.value = 1100;
                     }
-                    
                     timerPlay = setInterval(function() {
                         var valAtual = parseInt(slider.value);
                         if (valAtual >= 2026) {
@@ -833,147 +864,88 @@
                         } else {
                             slider.value = valAtual + 5;
                             display.textContent = "Ano: " + slider.value;
-                            atualizarFiltros();
+                            atualizarFiltros(); // VOLTA A LIGAR AQUI
                         }
                     }, 300);
                 }
             });
 
-            function getCategoriaRegisto(props) {
+    function getCategoriaRegisto(props) {
                 if (props.layer === 'Registos obtidos através da Ação de Ciência Cidadã') return 'Registos obtidos através da Ação de Ciência Cidadã';
                 if (props.conjunto === 'ANIMALx Espaços') return 'ANIMALx Espaços';
                 if (props.conjunto === 'ANIMALx Representações') return 'ANIMALx Representações';
                 return 'Outro';
             }
 
-            // 5. Função Central de Filtragem (adaptada à nova grelha)
+            // 5. Função Central de Filtragem
             function atualizarFiltros() {
                 var termoPesquisa = document.getElementById('pesquisa-especie').value.toLowerCase().trim();
                 var tipologiasSelecionadas = Array.from(document.querySelectorAll('#dd-tipologia .filtro-check:checked')).map(cb => cb.value);
                 var seculosSelecionados = Array.from(document.querySelectorAll('#dd-seculo .filtro-check:checked')).map(cb => cb.value);
+                var anoSlider = parseInt(document.getElementById('slider-ano').value);
 
                 marcadoresCluster.clearLayers();
 
-                var dadosFiltrados = {
-                    type: "FeatureCollection",
-                    features: json_ANIMALxRegistos_1.features.filter(function(feature) {
-                        var props = feature.properties;
-                        
-                        // Validação 1: Texto
-                        var nomeComum = props.nome_comum ? String(props.nome_comum).toLowerCase() : '';
-                        var matchPesquisa = termoPesquisa === "" || nomeComum.includes(termoPesquisa);
-                        if (!matchPesquisa) return false;
+                // --- 1. FILTRAGEM GERAL ---
+                var featuresGerais = json_ANIMALxRegistos_1.features.filter(function(feature) {
+                    var props = feature.properties;
+                    
+                    var nomeComum = props.nome_comum ? String(props.nome_comum).toLowerCase() : '';
+                    if (termoPesquisa !== "" && !nomeComum.includes(termoPesquisa)) return false;
 
-                        // Validação 2: Categoria Registo (Botões)
-                        var categoriaPonto = getCategoriaRegisto(props);
-                        if (filtroRegistoAtivo !== 'todos' && categoriaPonto !== filtroRegistoAtivo) return false;
-                        
-                        // Validação 3: Tipologia Animal (Dropdown)
-                        if (tipologiasSelecionadas.length > 0) {
+                    var categoriaPonto = getCategoriaRegisto(props);
+                    if (filtroRegistoAtivo !== 'todos' && categoriaPonto !== filtroRegistoAtivo) return false;
+                    
+                    if (tipologiasSelecionadas.length > 0) {
                         var tipologia = props.tipologia || '';
-                        var passaTipo = tipologiasSelecionadas.some(t => tipologia.includes(t));
-                        if (!passaTipo) return false;
-                        }
+                        if (!tipologiasSelecionadas.some(t => tipologia.includes(t))) return false;
+                    }
 
-                        // Validação 4: Cronologia (Dropdown)
-                         if (seculosSelecionados.length > 0) {
-                            var inicio = props.ano_inicio;
-                            var fim = props.ano_fim;
-                            var primeira_d = props.primeira_d;
-                            
-                            var passaSeculo = seculosSelecionados.some(sec => {
-                                if (sec === 'Indeterminada') return primeira_d === 'Indeterminada';
-                                var s = parseInt(sec);
-                                if (s === 12) return (inicio <= 1200 && fim >= 1101);
-                                if (s === 13) return (inicio <= 1300 && fim >= 1201);
-                                if (s === 14) return (inicio <= 1400 && fim >= 1301);
-                                if (s === 15) return (inicio <= 1500 && fim >= 1401);
-                                if (s === 16) return (inicio <= 1600 && fim >= 1501);
-                                if (s === 17) return (inicio <= 1700 && fim >= 1601);
-                                if (s === 18) return (inicio <= 1800 && fim >= 1701);
-                                if (s === 19) return (inicio <= 1900 && fim >= 1801);
-                                if (s === 20) return (inicio <= 2000 && fim >= 1901);
-                                if (s === 21) return (inicio <= 2100 && fim >= 2001);
-                                return false;
-                            });
-                            if (!passaSeculo) return false;
-                        }
-                   
-                        // Validação 5: Efeito Temporal (Slider Sidebar)
-                        var anoSlider = parseInt(document.getElementById('slider-ano').value);
-                        if (anoSlider > 1099) { 
-                            if (props.primeira_d === 'Indeterminada') {
-                                return false; 
-                            } else {
-                                // 1. Tenta usar os campos QGIS primeiro (A tua prioridade)
-                                var strInicio = String(props.pd_QGIS || "");
-                                var strFim = String(props.ud_QGIS || "");
-                                var matchInicio = strInicio.match(/\d{4}/);
-                                var matchFim = strFim.match(/\d{4}/);
-                                
-                                var inicioSlider = matchInicio ? parseInt(matchInicio[0]) : null;
-                                var fimSlider = matchFim ? parseInt(matchFim[0]) : null;
-                                
-                                // 2. Fallback (Plano B): Se o QGIS estiver vazio, vai buscar as datas base
-                                if (inicioSlider === null) {
-                                    inicioSlider = props.ano_inicio ? parseInt(props.ano_inicio) : 0;
-                                }
-                                if (fimSlider === null) {
-                                    fimSlider = props.ano_fim ? parseInt(props.ano_fim) : 9999;
-                                }
-                                
-                                // 3. A regra de ouro: O ano do slider tem de estar entre o início e o fim
-                                if (!(anoSlider >= inicioSlider && anoSlider <= fimSlider)) return false;
-                            }
-                        }
+                    if (seculosSelecionados.length > 0) {
+                        var inicio = props.ano_inicio;
+                        var fim = props.ano_fim;
+                        var primeira_d = props.primeira_d;
+                        var passaSeculo = seculosSelecionados.some(sec => {
+                            if (sec === 'Indeterminada') return primeira_d === 'Indeterminada';
+                            var s = parseInt(sec);
+                            if (s === 12) return (inicio <= 1200 && fim >= 1101);
+                            if (s === 13) return (inicio <= 1300 && fim >= 1201);
+                            if (s === 14) return (inicio <= 1400 && fim >= 1301);
+                            if (s === 15) return (inicio <= 1500 && fim >= 1401);
+                            if (s === 16) return (inicio <= 1600 && fim >= 1501);
+                            if (s === 17) return (inicio <= 1700 && fim >= 1601);
+                            if (s === 18) return (inicio <= 1800 && fim >= 1701);
+                            if (s === 19) return (inicio <= 1900 && fim >= 1801);
+                            if (s === 20) return (inicio <= 2000 && fim >= 1901);
+                            if (s === 21) return (inicio <= 2100 && fim >= 2001);
+                            return false;
+                        });
+                        if (!passaSeculo) return false;
+                    }
+                    return true;
+                });
 
-                        // Passou todas as validações do dashboard
-                        return true;
-                    })
-                }; 
-
-                // --- REMOVER REGISTOS DUPLICADOS (Sobretudo Representações vs Ciência Cidadã) ---
+                // --- 2. REMOVER DUPLICADOS E MISTURAR ---
                 var featuresUnicas = [];
                 var chavesVistas = new Set();
 
-                dadosFiltrados.features.forEach(function(f) {
+                featuresGerais.forEach(function(f) {
                     var props = f.properties;
-                    // Cria uma chave única baseada no Nome e na Localização (ou Hiperligação, se existir)
                     var chaveUnica = (props.nome_comum || '') + "|" + (props.localizaca || '');
-                    
                     if (!chavesVistas.has(chaveUnica)) {
                         chavesVistas.add(chaveUnica);
                         featuresUnicas.push(f);
                     }
                 });
 
-                // Substitui a lista com duplicados pela lista limpa
-                dadosFiltrados.features = featuresUnicas;
-                // --- FIM DA DESDUPLICAÇÃO ---
-
-            // ---  LÓGICA DE ALTERNÂNCIA PARA MISTURAR OS TIPOS DE REGISTO NA SIDEBAR ---
-                var grupos = {
-                    'ANIMALx Espaços': [],
-                    'ANIMALx Representações': [],
-                    'Registos obtidos através da Ação de Ciência Cidadã': [],
-                    'Outro': []
-                };
-
-                // 1. Separar os pontos filtrados pelas respetivas "gavetas"
-                dadosFiltrados.features.forEach(function(f) {
-                    var cat = getCategoriaRegisto(f.properties);
-                    if(grupos[cat]) {
-                        grupos[cat].push(f);
-                    } else {
-                        grupos['Outro'].push(f);
-                    }
+                var grupos = { 'ANIMALx Espaços': [], 'ANIMALx Representações': [], 'Registos obtidos através da Ação de Ciência Cidadã': [], 'Outro': [] };
+                featuresUnicas.forEach(function(f) {
+                    grupos[getCategoriaRegisto(f.properties) || 'Outro'].push(f);
                 });
 
                 var featuresMisturadas = [];
                 var categorias = Object.keys(grupos);
                 var haMaisPontos = true;
-
-                // 2. Tirar um ponto de cada gaveta à vez até estarem todas vazias
                 while (haMaisPontos) {
                     haMaisPontos = false;
                     categorias.forEach(function(cat) {
@@ -984,98 +956,79 @@
                     });
                 }
 
-                // 3. Substituir o array original pelo array perfeitamente alternado
-                dadosFiltrados.features = featuresMisturadas;
-                // --- FIM DA LÓGICA DE ALTERNÂNCIA ---
-
-
-
-                var novaCamada = L.geoJSON(dadosFiltrados, {
+                // --- 3. CRIAR CAMADA BASE ---
+                var camadaMestre = L.geoJSON({ type: "FeatureCollection", features: featuresMisturadas }, {
                     onEachFeature: pop_ANIMALxRegistos_1,
                     pointToLayer: function (feature, latlng) {
                         return L.marker(latlng, { icon: criarIconeDinamico(feature) });
                     }
                 });
 
-                marcadoresCluster.addLayer(novaCamada);
-
-                // --- RENDERIZAR LISTA DE PREVIEWS NA SIDEBAR ---
+                // --- 4. RENDERIZAR LISTA (Ignora ano) E MAPA (Lê o ano) ---
                 var listaContainer = document.getElementById('lista-preview');
                 listaContainer.innerHTML = ''; 
-
-                // dicionário global para guardar os marcadores ativos e podermos abri-los depois
                 window.camadasAtuais = {};
 
-                // Iterar sobre as camadas reais do Leaflet para construir os cartões
-                novaCamada.eachLayer(function(layer) {
+                camadaMestre.eachLayer(function(layer) {
                     var props = layer.feature.properties;
-                    
-                    // Guardar a camada no dicionário através do seu ID interno
-                    var layerId = novaCamada.getLayerId(layer);
+                    var layerId = camadaMestre.getLayerId(layer);
                     window.camadasAtuais[layerId] = layer;
-                    
-                    // 1. Imagem e Logo
+
                     var temImagem = props.caminho_fo && String(props.caminho_fo).trim() !== "";
-                    var caminhoFinal = temImagem 
-                        ? "images/" + String(props.caminho_fo).replace(/[\\/:]/g, '_').trim() 
-                        : "images/animalx_corvo.png";
+                    var caminhoFinal = temImagem ? "images/" + String(props.caminho_fo).replace(/[\\/:]/g, '_').trim() : "images/icone_espaços.png";
                     var classeImagem = temImagem ? "preview-img-foto" : "preview-img-logo";
-
-                    // 2. Extração de Textos
-                    var nomeComum = props.nome_comum || 'Desconhecido';
-                    var tipologia = props.tipologia || 'Sem tipologia';
                     
-                    // Correção da data na pré-visualização
-                    var textoData = "";
-                    if (props.primeira_d === 'Indeterminada') {
-                        textoData = "Indeterminada";
-                    } else if (props.ano_inicio === props.ano_fim) {
-                        textoData = props.ano_inicio || '';
-                    } else {
-                        textoData = (props.ano_inicio || '') + " - " + (props.ano_fim || '');
-                    }
-                    
-                    // 3. Limpar o nome do Tipo de Registo para o Balão
-                    var tipoRegisto = getCategoriaRegisto(props);
-                    var badgeTexto = tipoRegisto.replace('ANIMALx ', '').replace('Registos obtidos através da Ação de ', '');
+                    var textoData = props.primeira_d === 'Indeterminada' ? "Indeterminada" : (props.ano_inicio === props.ano_fim ? (props.ano_inicio || '') : (props.ano_inicio || '') + " - " + (props.ano_fim || ''));
+                    var badgeTexto = getCategoriaRegisto(props).replace('ANIMALx ', '').replace('Registos obtidos através da Ação de ', '');
 
-                    // 4. Estrutura HTML do Cartão (Removido o Nome Científico e adicionada a nova função de clique)
-                    var cartaoHTML = `
+                    listaContainer.insertAdjacentHTML('beforeend', `
                         <div class="card-preview" onclick="focarAbrirPopup(${layerId})">
                             <div class="preview-img-container">
-                                <img src="${caminhoFinal}" class="${classeImagem}" loading="lazy" alt="${nomeComum}">
+                                <img src="${caminhoFinal}" class="${classeImagem}" loading="lazy">
                             </div>
                             <div class="preview-content">
-                                <h4>${nomeComum}</h4>
-                                <div class="preview-meta-top">
-                                    <span class="badge-tipo">${badgeTexto}</span>
-                                </div>
+                                <h4>${props.nome_comum || 'Desconhecido'}</h4>
+                                <div class="preview-meta-top"><span class="badge-tipo">${badgeTexto}</span></div>
                                 <div class="preview-meta-bottom">
-                                    <span>${tipologia}</span>
+                                    <span>${props.tipologia || 'Sem tipologia'}</span>
                                     <span class="separador">|</span>
                                     <span>${textoData}</span>
                                 </div>
                             </div>
                         </div>
-                    `;
-                    
-                    listaContainer.insertAdjacentHTML('beforeend', cartaoHTML);
+                    `);
+
+                    var passaTempo = true;
+                    if (anoSlider > 1099) {
+                        if (props.primeira_d === 'Indeterminada') {
+                            passaTempo = false;
+                        } else {
+                            var strInicio = String(props.pd_QGIS || "");
+                            var strFim = String(props.ud_QGIS || "");
+                            var inicioSlider = strInicio.match(/\d{4}/) ? parseInt(strInicio.match(/\d{4}/)[0]) : (props.ano_inicio ? parseInt(props.ano_inicio) : 0);
+                            var fimSlider = strFim.match(/\d{4}/) ? parseInt(strFim.match(/\d{4}/)[0]) : (props.ano_fim ? parseInt(props.ano_fim) : 9999);
+                            
+                            if (!(anoSlider >= inicioSlider && anoSlider <= fimSlider)) passaTempo = false;
+                        }
+                    }
+                    if (passaTempo) marcadoresCluster.addLayer(layer);
                 });
             }
-            // --- FIM DA LIGAÇÃO AO NOVO DASHBOARD ---
-            // --- FIM DA CAMADA GEOJSON ---
+
             atualizarFiltros();
+
             // --- FUNÇÃO PARA ABRIR POPUP A PARTIR DA SIDEBAR ---
             window.focarAbrirPopup = function(layerId) {
                 var layer = window.camadasAtuais[layerId];
                 if (layer) {
-                    // O zoomToShowLayer desdobra o cluster (se necessário), centra o mapa e depois executa a função
+                    if (!marcadoresCluster.hasLayer(layer)) {
+                        marcadoresCluster.addLayer(layer);
+                    }
                     marcadoresCluster.zoomToShowLayer(layer, function() {
                         layer.openPopup();
                     });
                 }
             };
-
            
 
             // --- CARREGAR CARTOGRAFIA HISTÓRICA VIA LOCAL ---
@@ -1117,31 +1070,55 @@
             });
 
 
-            // --- 3. MENU DE CONTROLO ---
-            var mapasBase = { "Mapa Base": layer_CartoVoyagerLabels_0 };
-            
+
+        // --- 3. MENU DE CONTROLO (MOVIDO PARA A SIDEBAR) ---
             var camadasSobreposicao = {
-                "Registos ANIMALx": marcadoresCluster,
-                "Cartografia - Planta Toponímica": cartografiaToponimicaLocal,
                 "Cartografia - Tinoco (1650)": cartografiaTinocoLocal,
-                "Cartografia - Folque (1856-1858)": cartografiaFolqueLocal
+                "Cartografia - Planta Toponímica (1758)": cartografiaToponimicaLocal,
+                "Cartografia - Filipe Folque (1856-1858)": cartografiaFolqueLocal
             };
 
-            L.control.layers(mapasBase, camadasSobreposicao, {
-                collapsed: true,
-                position: 'topleft'
-            }).addTo(map);
+            var controloCamadas = L.control.layers(null, camadasSobreposicao, {
+                collapsed: false
+            });
 
-            // Esconder o ecrã de carregamento quando a página terminar de carregar
+            controloCamadas.addTo(map);
+
+            // O Truque de Magia (Com Rede de Segurança)
+            var divDestino = document.getElementById('camadas-leaflet-aqui');
+            
+            if (divDestino) {
+                divDestino.appendChild(controloCamadas.getContainer());
+            } else {
+                console.error("FALHA: Não encontrei a <div id='camadas-leaflet-aqui'> no HTML para colocar o menu!");
+            }
+
+            // --- COLAPSAR/EXPANDIR MENU DE CARTOGRAFIA ---
+            var tituloCartografia = document.getElementById('toggle-cartografia');
+            var conteudoCartografia = document.getElementById('camadas-leaflet-aqui');
+            var setaCartografia = document.getElementById('seta-cartografia');
+
+            if (tituloCartografia) {
+                tituloCartografia.addEventListener('click', function() {
+                    // Alterna entre mostrar e esconder as opções
+                    conteudoCartografia.classList.toggle('escondido');
+                    // Roda a setinha para cima ou para baixo
+                    setaCartografia.classList.toggle('aberto');
+                });
+            }
+
+            // --- ESCONDER ECRÃ DE CARREGAMENTO ---
             window.addEventListener('load', function() {
                 var loadingScreen = document.getElementById('loading-screen');
-                // Reduz a opacidade para criar um efeito de transição suave
-                loadingScreen.style.opacity = '0';
-                
-                // Remove o elemento do HTML após meio segundo (o tempo da transição)
-                setTimeout(function() {
-                    loadingScreen.style.display = 'none';
-                }, 500);
+                if (loadingScreen) {
+                    // Reduz a opacidade para criar um efeito de transição suave
+                    loadingScreen.style.opacity = '0';
+                    
+                    // Remove o elemento do HTML após meio segundo (o tempo da transição)
+                    setTimeout(function() {
+                        loadingScreen.style.display = 'none';
+                    }, 500);
+                }
             });
         </script>        
     </body>
