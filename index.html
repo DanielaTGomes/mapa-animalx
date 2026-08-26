@@ -328,11 +328,22 @@
 
             <!-- 2. Barra de Ferramentas Unificada -->
             <section class="toolbar-animalx">
-                <div class="toolbar-esq">
-                    <button class="btn-filtro ativo" data-filtro="todos">Todos</button>
-                    <button class="btn-filtro" data-filtro="ANIMALx Espaços">Espaços</button>
-                    <button class="btn-filtro" data-filtro="ANIMALx Representações">Representações</button>
-                    <button class="btn-filtro" data-filtro="Registos obtidos através da Ação de Ciência Cidadã">Ciência Cidadã</button>
+            <div class="toolbar-esq">
+                    <button class="btn-filtro ativo" data-filtro="todos">
+                        <span>Todos</span>
+                    </button>
+                    <button class="btn-filtro" data-filtro="ANIMALx Espaços">
+                        <span>Espaços</span> 
+                        <img src="images/marcadores_svg/pin_espaços.svg" class="icone-legenda" alt="Espaços">
+                    </button>
+                    <button class="btn-filtro" data-filtro="ANIMALx Representações">
+                        <span>Representações</span> 
+                        <img src="images/marcadores_svg/pin_representacoes.svg" class="icone-legenda" alt="Representações">
+                    </button>
+                    <button class="btn-filtro" data-filtro="Registos obtidos através da Ação de Ciência Cidadã">
+                        <span>Ciência Cidadã</span> 
+                        <img src="images/marcadores_svg/pin_ciencia_cidada.svg" class="icone-legenda" alt="Ciência Cidadã">
+                    </button>
                 </div>
                 <div class="toolbar-centro">
                     <input type="text" id="pesquisa-especie" placeholder="Pesquisar espécie (ex: Cão, Cavalo)...">
@@ -342,14 +353,45 @@
                     <div class="dropdown-multi" id="dd-tipologia">
                         <button class="btn-dropdown">Todas as Tipologias</button>
                         <div class="dropdown-conteudo">
-                            <label class="opcao-master selecionado"><input type="checkbox" value="todos" checked> Todas as Tipologias</label>
-                            <label><input type="checkbox" class="filtro-check" value="Consumo"> Consumo</label>
-                            <label><input type="checkbox" class="filtro-check" value="Selvage"> Selvagem</label>
-                            <label><input type="checkbox" class="filtro-check" value="Companhia"> Companhia</label>
-                            <label><input type="checkbox" class="filtro-check" value="Trabalho"> Trabalho</label>
-                            <label><input type="checkbox" class="filtro-check" value="Exposição"> Exposição e Espetáculo</label>
-                            <label><input type="checkbox" class="filtro-check" value="Conhecimento"> Conhecimento e Saúde</label>
-                            <label><input type="checkbox" class="filtro-check" value="Simbólico"> Simbólico</label>
+                            <label class="opcao-master selecionado">
+                                <input type="checkbox" value="todos" checked> 
+                                <span class="texto-filtro">Todas as Tipologias</span>
+                            </label>
+                            <label>
+                                <input type="checkbox" class="filtro-check" value="Consumo"> 
+                                <span class="texto-filtro">Consumo</span> 
+                                <img src="images/marcadores_svg/icone_consumo_menu.svg" class="icone-legenda">
+                            </label>
+                            <label>
+                                <input type="checkbox" class="filtro-check" value="Selvage"> 
+                                <span class="texto-filtro">Selvagem</span> 
+                                <img src="images/marcadores_svg/icone_selvagem_menu.svg" class="icone-legenda">
+                            </label>
+                            <label>
+                                <input type="checkbox" class="filtro-check" value="Companhia"> 
+                                <span class="texto-filtro">Companhia</span> 
+                                <img src="images/marcadores_svg/icone_companhia_menu.svg" class="icone-legenda">
+                            </label>
+                            <label>
+                                <input type="checkbox" class="filtro-check" value="Trabalho"> 
+                                <span class="texto-filtro">Trabalho</span> 
+                                <img src="images/marcadores_svg/icone_trabalho_menu.svg" class="icone-legenda">
+                            </label>
+                            <label>
+                                <input type="checkbox" class="filtro-check" value="Exposição"> 
+                                <span class="texto-filtro">Exposição e Espetáculo</span> 
+                                <img src="images/marcadores_svg/icone_exposiçãoeespetaculo_menu.svg" class="icone-legenda">
+                            </label>
+                            <label>
+                                <input type="checkbox" class="filtro-check" value="Conhecimento"> 
+                                <span class="texto-filtro">Conhecimento e Saúde</span> 
+                                <img src="images/marcadores_svg/icone_conhecimentoesaude_menu.svg" class="icone-legenda">
+                            </label>
+                            <label>
+                                <input type="checkbox" class="filtro-check" value="Simbólico"> 
+                                <span class="texto-filtro">Simbólico</span> 
+                                <img src="images/marcadores_svg/icone_simbolico_menu.svg" class="icone-legenda">
+                            </label>
                         </div>
                     </div>
 
@@ -357,20 +399,71 @@
                     <div class="dropdown-multi" id="dd-seculo">
                         <button class="btn-dropdown">Todos os Séculos</button>
                         <div class="dropdown-conteudo">
-                            <label class="opcao-master selecionado"><input type="checkbox" value="todos" checked> Todos os Séculos</label>
-                            <label><input type="checkbox" class="filtro-check" value="12"> Século XII</label>
-                            <label><input type="checkbox" class="filtro-check" value="13"> Século XIII</label>
-                            <label><input type="checkbox" class="filtro-check" value="14"> Século XIV</label>
-                            <label><input type="checkbox" class="filtro-check" value="15"> Século XV</label>
-                            <label><input type="checkbox" class="filtro-check" value="16"> Século XVI</label>
-                            <label><input type="checkbox" class="filtro-check" value="17"> Século XVII</label>
-                            <label><input type="checkbox" class="filtro-check" value="18"> Século XVIII</label>
-                            <label><input type="checkbox" class="filtro-check" value="19"> Século XIX</label>
-                            <label><input type="checkbox" class="filtro-check" value="20"> Século XX</label>
-                            <label><input type="checkbox" class="filtro-check" value="21"> Século XXI</label>
-                            <label><input type="checkbox" class="filtro-check" value="Indeterminada"> Indeterminada</label>
+                            <label class="opcao-master selecionado">
+                                <input type="checkbox" value="todos" checked> 
+                                <span class="texto-filtro">Todos os Séculos</span>
+                            </label>
+                            <label>
+                                <input type="checkbox" class="filtro-check" value="12"> 
+                                <span class="texto-filtro">Século XII</span>
+                                <img src="images/marcadores_svg/seculo_12.svg" class="icone-legenda">
+                            </label>
+                            <label>
+                                <input type="checkbox" class="filtro-check" value="13"> 
+                                <span class="texto-filtro">Século XIII</span>
+                                <img src="images/marcadores_svg/seculo_13.svg" class="icone-legenda">
+                            </label>
+                            <label>
+                                <input type="checkbox" class="filtro-check" value="14"> 
+                                <span class="texto-filtro">Século XIV</span>
+                                <img src="images/marcadores_svg/seculo_14.svg" class="icone-legenda">
+                            </label>
+                            <label>
+                                <input type="checkbox" class="filtro-check" value="15"> 
+                                <span class="texto-filtro">Século XV</span>
+                                <img src="images/marcadores_svg/seculo_15.svg" class="icone-legenda">
+                            </label>
+                            <label>
+                                <input type="checkbox" class="filtro-check" value="16"> 
+                                <span class="texto-filtro">Século XVI</span>
+                                <img src="images/marcadores_svg/seculo_16.svg" class="icone-legenda">
+                            </label>
+                            <label>
+                                <input type="checkbox" class="filtro-check" value="17"> 
+                                <span class="texto-filtro">Século XVII</span>
+                                <img src="images/marcadores_svg/seculo_17.svg" class="icone-legenda">
+                            </label>
+                            <label>
+                                <input type="checkbox" class="filtro-check" value="18"> 
+                                <span class="texto-filtro">Século XVIII</span>
+                                <img src="images/marcadores_svg/seculo_18.svg" class="icone-legenda">
+                            </label>
+                            <label>
+                                <input type="checkbox" class="filtro-check" value="19"> 
+                                <span class="texto-filtro">Século XIX</span>
+                                <img src="images/marcadores_svg/seculo_19.svg" class="icone-legenda">
+                            </label>
+                            <label>
+                                <input type="checkbox" class="filtro-check" value="20"> 
+                                <span class="texto-filtro">Século XX</span>
+                                <img src="images/marcadores_svg/seculo_20.svg" class="icone-legenda">
+                            </label>
+                            <label>
+                                <input type="checkbox" class="filtro-check" value="21"> 
+                                <span class="texto-filtro">Século XXI</span>
+                                <img src="images/marcadores_svg/seculo_21.svg" class="icone-legenda">
+                            </label>
+                            <label>
+                                <input type="checkbox" class="filtro-check" value="Indeterminada"> 
+                                <span class="texto-filtro">Indeterminada</span>
+                                <img src="images/marcadores_svg/indeterminada.svg" class="icone-legenda">
+                            </label>
                         </div>
                     </div>
+
+                    <button id="btn-limpar-filtros" class="btn-limpar-filtros" title="Limpar todas as pesquisas">
+                        <i class="fas fa-undo-alt"></i> Limpar
+                    </button>
                 </div>
             </section>
 
@@ -389,9 +482,9 @@
                             <div class="timeline-header">
                                 <button id="btn-play" class="btn-play">▶</button>
                                 <div class="timeline-labels">
-                                    <span class="extremo-ano">Sec. XII</span>
-                                    <span id="ano-display">Todos os Anos</span>
-                                    <span class="extremo-ano">2026</span>
+                                    <span class="extremo-ano">Séc. XII</span>
+                                    <span id="ano-display">Cronologia</span>
+                                    <span class="extremo-ano">Séc. XXI</span>
                                 </div>
                             </div>
                             <input type="range" id="slider-ano" min="1099" max="2026" value="1099" step="1">
@@ -599,6 +692,34 @@
         var zoomControl = L.control.zoom({
             position: 'topleft'
         }).addTo(map);
+
+        // --- BOTÃO ZOOM INICIAL (HOME) ---
+        var ZoomInicialControl = L.Control.extend({
+            options: {
+                position: 'topleft' // Coloca-o no mesmo sítio do zoom, ficando imediatamente por baixo
+            },
+            onAdd: function (map) {
+                // Cria a caixa com o formato padrão do Leaflet
+                var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control custom-zoom-home');
+                
+                // Cria o botão em si
+                var button = L.DomUtil.create('a', 'zoom-home-button', container);
+                button.href = '#';
+                button.title = 'Voltar à vista geral';
+                button.innerHTML = '<i class="fas fa-home"></i>'; // O ícone da casinha
+                
+                // O que acontece quando se clica
+                L.DomEvent.disableClickPropagation(button);
+                L.DomEvent.on(button, 'click', function(e) {
+                    L.DomEvent.preventDefault(e);
+                    // Devolve o mapa à coordenada exata e ao zoom de abertura (11)
+                    map.setView([38.7500, -9.2300], 11); 
+                });
+
+                return container;
+            }
+        });
+        map.addControl(new ZoomInicialControl());
         var bounds_group = new L.featureGroup([]);
         function setBounds() {
         }
@@ -837,7 +958,7 @@
 
             slider.addEventListener('input', function() {
                 if (this.value == 1099) {
-                    display.textContent = "Todos os Anos";
+                    display.textContent = "Cronologia";
                 } else {
                     display.textContent = "Ano: " + this.value;
                 }
@@ -858,23 +979,76 @@
                     timerPlay = setInterval(function() {
                         var valAtual = parseInt(slider.value);
                         if (valAtual >= 2026) {
+                            // 1. Pára a animação
                             clearInterval(timerPlay);
                             btnPlay.textContent = "▶";
                             aTocar = false;
+                            
+                            
+                            slider.value = 1099;
+                            display.textContent = "Cronologia";
+                            atualizarFiltros(); 
+                            
                         } else {
+                            // Continua a avançar normalmente
                             slider.value = valAtual + 5;
                             display.textContent = "Ano: " + slider.value;
-                            atualizarFiltros(); // VOLTA A LIGAR AQUI
+                            atualizarFiltros(); 
                         }
                     }, 300);
                 }
             });
 
-    function getCategoriaRegisto(props) {
+        function getCategoriaRegisto(props) {
                 if (props.layer === 'Registos obtidos através da Ação de Ciência Cidadã') return 'Registos obtidos através da Ação de Ciência Cidadã';
                 if (props.conjunto === 'ANIMALx Espaços') return 'ANIMALx Espaços';
                 if (props.conjunto === 'ANIMALx Representações') return 'ANIMALx Representações';
                 return 'Outro';
+            }
+
+            // --- BOTÃO LIMPAR FILTROS ---
+            var btnLimpar = document.getElementById('btn-limpar-filtros');
+            if (btnLimpar) {
+                btnLimpar.addEventListener('click', function() {
+                    // 1. Reset da Barra de Texto
+                    document.getElementById('pesquisa-especie').value = '';
+
+                    // 2. Reset dos Botões de Categoria
+                    filtroRegistoAtivo = 'todos';
+                    document.querySelectorAll('.btn-filtro').forEach(b => b.classList.remove('ativo'));
+                    document.querySelector('.btn-filtro[data-filtro="todos"]').classList.add('ativo');
+
+                    // 3. Reset dos Menus Dropdown
+                    function fazerResetDropdown(idContainer) {
+                        var container = document.getElementById(idContainer);
+                        var btn = container.querySelector('.btn-dropdown');
+                        var opcaoMaster = container.querySelector('.opcao-master');
+                        var checkMaster = opcaoMaster.querySelector('input');
+                        var checksSecundarios = container.querySelectorAll('.filtro-check');
+                        
+                        checkMaster.checked = true;
+                        opcaoMaster.classList.add('selecionado');
+                        
+                        checksSecundarios.forEach(opt => {
+                            opt.checked = false;
+                            opt.parentElement.classList.remove('selecionado');
+                        });
+                        btn.textContent = opcaoMaster.textContent.trim();
+                    }
+                    fazerResetDropdown('dd-tipologia');
+                    fazerResetDropdown('dd-seculo');
+
+                    // 4. Reset do Slider Temporal
+                    var sliderTemp = document.getElementById('slider-ano');
+                    var displayTemp = document.getElementById('ano-display');
+                    if (sliderTemp && displayTemp) {
+                        sliderTemp.value = 1099;
+                        displayTemp.textContent = "Todos os Anos";
+                    }
+
+                    // 5. Atualizar o Mapa
+                    atualizarFiltros();
+                });
             }
 
             // 5. Função Central de Filtragem
@@ -1073,9 +1247,9 @@
 
         // --- 3. MENU DE CONTROLO (MOVIDO PARA A SIDEBAR) ---
             var camadasSobreposicao = {
-                "Cartografia - Tinoco (1650)": cartografiaTinocoLocal,
-                "Cartografia - Planta Toponímica (1758)": cartografiaToponimicaLocal,
-                "Cartografia - Filipe Folque (1856-1858)": cartografiaFolqueLocal
+                "Planta da Cidade de Lisboa delineada por João Nunes Tinoco (1650)": cartografiaTinocoLocal,
+                "Planta Topográfica da Cidade de Lisboa (1758)": cartografiaToponimicaLocal,
+                "Carta Topográfica da Cidade de Lisboa delineada por Filipe Folque (1856-1858)": cartografiaFolqueLocal
             };
 
             var controloCamadas = L.control.layers(null, camadasSobreposicao, {

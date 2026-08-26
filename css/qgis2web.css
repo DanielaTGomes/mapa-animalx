@@ -677,23 +677,95 @@ body, html {
 
 .toolbar-esq { display: flex; gap: 8px; }
 
-.btn-filtro {
-    background-color: #ffffff;
-    border: 1px solid #a5acdc;
-    color: #3a4164;
-    padding: 6px 16px;
-    border-radius: 20px;
-    font-family: 'Nohemi', sans-serif;
-    font-size: 13px;
-    cursor: pointer;
-    transition: all 0.2s;
-}
+/* --- ESTILIZAÇÃO DOS BOTÕES DO TOPO --- */
+        .btn-filtro {
+            display: inline-flex !important;
+            flex-direction: row !important; /* Força o ícone e o texto a ficarem LADO A LADO */
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 8px !important; /* Espaço entre texto e ícone */
+            padding: 6px 16px !important;
+            border: 1px solid #a5acdc !important;
+            border-radius: 20px !important; /* Devolve a forma redondinha (pílula) */
+            font-family: 'Nohemi', sans-serif !important;
+            font-size: 13px !important;
+            color: #3a4164 !important;
+            background-color: #ffffff !important;
+            cursor: pointer !important;
+            transition: all 0.2s !important;
+            height: auto !important; /* Deixa a altura ajustar-se ao conteúdo */
+            min-height: 34px !important;
+            white-space: nowrap !important; /* Impede que o texto parta para a linha de baixo */
+        }
 
-.btn-filtro:hover, .btn-filtro.ativo {
-    background-color: #3a4164;
-    color: #ffffff;
-    border-color: #3a4164;
-}
+        .btn-filtro:hover, .btn-filtro.ativo {
+            background-color: #3a4164 !important;
+            color: #ffffff !important;
+            border-color: #3a4164 !important;
+        }
+
+        /* 2. Forçar tamanho compacto para o ícone */
+        .btn-filtro .icone-legenda {
+            height: 20px !important;       /* Altura exata para acompanhar a fonte */
+            max-height: 20px !important;
+            width: auto !important;
+            max-width: 20px !important;
+            display: block !important;
+            object-fit: contain !important;
+            margin: 0 !important;
+            flex-shrink: 0 !important;     /* Não deixa o ícone ser esmagado nem crescer */
+        }
+
+        /* 3. Ícones dentro dos Dropdowns */
+        .dropdown-conteudo label {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            padding-right: 12px !important;
+        }
+
+        .dropdown-conteudo .icone-legenda {
+            height: 20px !important;
+            max-height: 20px !important;
+            width: auto !important;
+            object-fit: contain !important;
+            flex-shrink: 0 !important;
+        }
+
+        /* 4. Mudança suave de cor para branco no estado ativo */
+        .btn-filtro:hover .icone-legenda,
+        .btn-filtro.ativo .icone-legenda,
+        .dropdown-conteudo label:hover .icone-legenda,
+        .dropdown-conteudo label.selecionado .icone-legenda {
+            filter: brightness(0) invert(1) !important;
+        }
+
+        /* --- BOTÃO LIMPAR FILTROS --- */
+        .btn-limpar-filtros {
+            display: inline-flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 6px !important;
+            padding: 6px 16px !important;
+            border: 1px solid #d8dceb !important;
+            border-radius: 20px !important; /* Mesma forma redondinha dos outros botões */
+            font-family: 'Nohemi', sans-serif !important;
+            font-size: 13px !important;
+            color: #6c75b7 !important;
+            background-color: #fbf9fb !important;
+            cursor: pointer !important;
+            transition: all 0.2s !important;
+            height: auto !important;
+            min-height: 34px !important;
+            white-space: nowrap !important;
+        }
+
+        .btn-limpar-filtros:hover {
+            background-color: #d8dceb !important;
+            color: #3a4164 !important;
+        }
 
 .toolbar-centro input {
     width: 300px;
@@ -1022,6 +1094,49 @@ body, html {
     color: #ffffff;
     font-weight: 600;
 }
+
+/* --- SCROLLBAR ELEGANTE PARA OS DROPDOWNS --- */
+        .dropdown-conteudo::-webkit-scrollbar {
+            width: 6px; /* Largura fina e discreta */
+        }
+        
+        .dropdown-conteudo::-webkit-scrollbar-thumb {
+            background: #6c75b7; /* O tom de roxo do teu projeto */
+            border-radius: 4px; /* Pontas arredondadas */
+        }
+        
+        .dropdown-conteudo::-webkit-scrollbar-track {
+            background: #fbf9fb; /* O tom de fundo muito clarinho do teu projeto */
+            border-radius: 4px;
+        }
+        
+        /* Opcional: Adicionar a mesma elegância à lista de resultados na sidebar */
+        .lista-preview::-webkit-scrollbar {
+            width: 6px;
+        }
+        .lista-preview::-webkit-scrollbar-thumb {
+            background: #6c75b7;
+            border-radius: 4px;
+        }
+        .lista-preview::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+/* 2. Cores de fundo dinâmicas para cada século! 
+           (Atenção: ajusta os códigos #HEX para as cores exatas que usaste nos SVG) */
+        #dd-seculo label.selecionado:has(input[value="12"]) { background-color: #15053b !important; } /* Séc XII (Exemplo) */
+        #dd-seculo label.selecionado:has(input[value="13"]) { background-color: #6d4468 !important; } /* Séc XIII (Exemplo) */
+        #dd-seculo label.selecionado:has(input[value="14"]) { background-color: #291262 !important; } /* Séc XIV (Exemplo) */
+        
+        #dd-seculo label.selecionado:has(input[value="15"]) { background-color: #48394c !important; } /* Séc XV */
+        #dd-seculo label.selecionado:has(input[value="16"]) { background-color: #3d1f89 !important; } /* Séc XVI */
+        #dd-seculo label.selecionado:has(input[value="17"]) { background-color: #953775 !important; } /* Séc XVII */
+        #dd-seculo label.selecionado:has(input[value="18"]) { background-color: #612275 !important; } /* Séc XVIII */
+        #dd-seculo label.selecionado:has(input[value="19"]) { background-color: #532da6 !important; } /* Séc XIX */
+        #dd-seculo label.selecionado:has(input[value="20"]) { background-color: #7c2d7b !important; } /* Séc XX */
+        #dd-seculo label.selecionado:has(input[value="21"]) { background-color: #612275 !important; } /* Séc XXI */
+        
+        #dd-seculo label.selecionado:has(input[value="Indeterminada"]) { background-color: #9596c1 !important; } /* Indeterminada */
 
 /* --- AFINAÇÃO DO CONTROLO DE CAMADAS LEAFLET --- */
 .leaflet-control-layers {
