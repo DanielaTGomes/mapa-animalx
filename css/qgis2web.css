@@ -1128,13 +1128,13 @@ body, html {
         #dd-seculo label.selecionado:has(input[value="13"]) { background-color: #6d4468 !important; } /* Séc XIII (Exemplo) */
         #dd-seculo label.selecionado:has(input[value="14"]) { background-color: #291262 !important; } /* Séc XIV (Exemplo) */
         
-        #dd-seculo label.selecionado:has(input[value="15"]) { background-color: #48394c !important; } /* Séc XV */
+        #dd-seculo label.selecionado:has(input[value="15"]) { background-color: #127fa5 !important; } /* Séc XV */
         #dd-seculo label.selecionado:has(input[value="16"]) { background-color: #3d1f89 !important; } /* Séc XVI */
         #dd-seculo label.selecionado:has(input[value="17"]) { background-color: #953775 !important; } /* Séc XVII */
-        #dd-seculo label.selecionado:has(input[value="18"]) { background-color: #612275 !important; } /* Séc XVIII */
+        #dd-seculo label.selecionado:has(input[value="18"]) { background-color: #6393a3 !important; } /* Séc XVIII */
         #dd-seculo label.selecionado:has(input[value="19"]) { background-color: #532da6 !important; } /* Séc XIX */
-        #dd-seculo label.selecionado:has(input[value="20"]) { background-color: #7c2d7b !important; } /* Séc XX */
-        #dd-seculo label.selecionado:has(input[value="21"]) { background-color: #612275 !important; } /* Séc XXI */
+        #dd-seculo label.selecionado:has(input[value="20"]) { background-color: #af4dae !important; } /* Séc XX */
+        #dd-seculo label.selecionado:has(input[value="21"]) { background-color: #42cedc !important; } /* Séc XXI */
         
         #dd-seculo label.selecionado:has(input[value="Indeterminada"]) { background-color: #9596c1 !important; } /* Indeterminada */
 
